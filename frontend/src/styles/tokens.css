@@ -1,0 +1,147 @@
+/**
+ * Open Mail Room — Design tokens (色彩識別)
+ * Drop-in replacement for: frontend/src/styles/tokens.css
+ * See docs/plan/06-UI-UX.md §3/§4 and docs/BRANDING.md.
+ *
+ * Okabe-Ito colour-blind-safe palette is FIXED: branding.yaml may only override
+ * --brand-primary (品牌主色). Status colours (--oi-*) must never be remapped by a
+ * template — that would break the WCAG 2.2 AAA + colour-blind accessibility
+ * guarantee. Colour is NEVER the sole carrier of meaning (dot + icon + text).
+ *
+ * NOTE: --oi-orange / --oi-skyblue / --oi-yellow are not AAA-compliant as *text*
+ * on white. Use them only as (a) a decorative status dot beside an icon + text
+ * label, or (b) a filled background with black text on top. Never set them on
+ * `color` for body text — use the semantic --color-*-text tokens instead.
+ */
+
+:root {
+  /* ---- Okabe-Ito status palette (do not remap) ---- */
+  --oi-orange: #e69f00;     /* 待確認 pending */
+  --oi-skyblue: #56b4e9;    /* 已通知 notified */
+  --oi-green: #009e73;      /* 已領取 picked_up */
+  --oi-yellow: #f0e442;     /* 提醒 reminder (僅底色, 配黑字) */
+  --oi-blue: #0072b2;       /* 連結 / focus ring */
+  --oi-vermillion: #d55e00; /* 滯留 / 錯誤 unclaimed */
+  --oi-purple: #cc79a7;     /* 交寄 outbound */
+  --oi-black: #000000;
+  --oi-white: #ffffff;
+
+  /* ---- AAA text-contrast variants of danger/success semantics ----
+   * --oi-vermillion (~3.87:1) and --oi-green (~3.42:1) fail AAA (>=7:1) as
+   * *text* on white. These deepened tokens are the AAA-safe stand-ins for
+   * `color` on error/success copy; never touch border/background/dot uses of
+   * the original --oi-* tokens.
+   * #992a0c on #ffffff = 7.80:1 · #005a42 on #ffffff = 8.26:1 */
+  --color-danger-text: #992a0c;
+  --color-success-text: #005a42;
+
+  /* Fixed deep red for a *filled* danger surface (button background). NOT
+   * remapped in dark mode — white label text needs a dark-enough fill for
+   * >=7:1 in every scheme. Same hex as the light --color-danger-text. */
+  --color-danger-strong: #992a0c;
+
+  /* ---- Brand (the ONLY colour branding.yaml may override) ----
+   * Must keep white-text contrast >= 7:1 (AAA). --oi-blue (#0072b2) only
+   * reaches ~5.2:1 with white, so the brand fill is a deeper blue tuned to
+   * ~8.3:1. --oi-blue itself stays for links / focus / status badges. */
+  --brand-primary: #00537f;
+  --brand-primary-contrast: var(--oi-white);
+  /* Pre-derived hover/active shades so components don't rely on filter()
+   * (which desaturates and can dip below AAA). Recompute if you change
+   * --brand-primary: hover ~ -12% L, active ~ -20% L, kept >= 7:1 on white. */
+  --brand-primary-hover: #00456a;
+  --brand-primary-active: #003a58;
+
+  /* ---- Text / surface (AAA: body text >= 7:1) ---- */
+  --color-text: #1a1a1a;         /* on #ffffff ~ 17:1 */
+  --color-text-inverse: #ffffff;
+  --color-text-muted: #4a4a4a;   /* on #ffffff ~ 8.9:1 */
+  --color-bg: #ffffff;
+  --color-bg-elevated: #ffffff;
+  --color-bg-subtle: #f4f4f4;
+  --color-border: #6b6b6b;       /* >= 3:1 non-text UI contrast on white */
+  --color-border-subtle: #e6e6e6;/* hairline dividers on white (decorative) */
+
+  /* ---- Status semantics: background/dot fills, paired with icon + text ---- */
+  --status-pending-bg: var(--oi-orange);
+  --status-pending-fg: #000000;
+  --status-notified-bg: var(--oi-skyblue);
+  --status-notified-fg: #000000;
+  --status-picked-up-bg: var(--oi-green);
+  --status-picked-up-fg: #ffffff;
+  --status-reminder-bg: var(--oi-yellow);
+  --status-reminder-fg: #000000;
+  --status-reminder-border: #b59b00; /* yellow fails 3:1 as a border on white */
+  --status-unclaimed-bg: var(--oi-vermillion);
+  --status-unclaimed-fg: #ffffff;
+  --status-outbound-bg: var(--oi-purple);
+  --status-outbound-fg: #000000;
+
+  /* ---- Spacing scale ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* ---- Typography ---- */
+  --font-family-base:
+    system-ui, -apple-system, 'Segoe UI', 'PingFang TC', 'Noto Sans TC', Roboto, sans-serif;
+  --font-family-mono:
+    'IBM Plex Mono', ui-monospace, 'SFMono-Regular', 'Cascadia Code', monospace;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 22px;
+  --font-size-2xl: 28px;
+  --line-height-base: 1.5;
+  --line-height-tight: 1.25;
+
+  /* ---- Radius ---- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 999px;
+
+  /* ---- Touch target (06 §3: >= 44x44px) ---- */
+  --touch-target-min: 44px;
+
+  /* ---- Focus ring (visible keyboard focus, >= 3:1 non-text contrast) ---- */
+  --focus-ring: 3px solid var(--oi-blue);
+  --focus-ring-offset: 2px;
+
+  /* ---- Breakpoints (documented for JS; CSS uses literal media queries) ---- */
+  --breakpoint-sm: 640px;
+  --breakpoint-lg: 1024px;
+}
+
+/* Dark mode mirrors the same AAA contrast guarantee (06 §3: 深色模式同理鏡射) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #f2f2f2;        /* on #121212 ~ 16:1 */
+    --color-text-inverse: #1a1a1a;
+    --color-text-muted: #c9c9c9;
+    --color-bg: #121212;
+    --color-bg-elevated: #1e1e1e;
+    --color-bg-subtle: #262626;
+    --color-border: #9a9a9a;
+    --color-border-subtle: #333333;
+
+    /* Status fills stay the same hue; foreground text flips to black. */
+    --status-pending-fg: #000000;
+    --status-notified-fg: #000000;
+    --status-picked-up-fg: #000000;
+    --status-reminder-fg: #000000;
+    --status-unclaimed-fg: #000000;
+    --status-outbound-fg: #000000;
+
+    /* Re-tuned for the dark background: the light dark-red/green would drop to
+     * ~2.4:1 here. #ff8a65 on #121212 = 8.10:1 · #34d399 on #121212 = 9.75:1.
+     * --color-danger-strong is intentionally NOT overridden (see its comment). */
+    --color-danger-text: #ff8a65;
+    --color-success-text: #34d399;
+  }
+}

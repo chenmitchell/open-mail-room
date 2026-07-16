@@ -1,0 +1,75 @@
+{$DOMAIN:localhost}:443, {$DOMAIN:localhost}:80 {
+	# For development without domain: self-signed cert (requires selfsigned.sh)
+	# For production: automatic Let's Encrypt (DOMAIN must be resolvable)
+
+	# TLS configuration (automatic Let's Encrypt for valid domains)
+	tls {
+		# For localhost or self-signed: self_signed directive will be used
+		# For production domains: Let's Encrypt will be auto-provisioned
+	}
+
+	# Security headers. No path matcher on `header` -> applies globally to
+	# every response from this site block. `header /` previously only
+	# matched the literal path "/" (Caddy path matchers require an explicit
+	# wildcard like "/*" to match more than that), so every other route --
+	# including the API and the SPA's own JS/CSS -- shipped with none of
+	# these headers (M0-R1 suggestion).
+	header {
+		# HSTS with 1 year max-age
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+		# CSP: restrict to same origin by default, allow unsafe-inline for now (tighten in production)
+		Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'"
+
+		# Prevent MIME type sniffing
+		X-Content-Type-Options "nosniff"
+
+		# Prevent clickjacking
+		X-Frame-Options "SAMEORIGIN"
+
+		# Referrer policy
+		Referrer-Policy "strict-origin-when-cross-origin"
+
+		# Permissions policy (formerly Feature-Policy). camera=(self): M2's
+		# in-browser photo capture uses getUserMedia from our own origin --
+		# camera=() would break it entirely.
+		Permissions-Policy "camera=(self), microphone=(), payment=()"
+	}
+
+	# HTTP redirect to HTTPS
+	@http {
+		protocol http
+	}
+	redir @http https://{host}{uri} permanent
+
+	# API reverse proxy to backend
+	@api {
+		path /api/*
+	}
+	reverse_proxy @api backend:8000 {
+		header_down -Server
+		header_down -X-Powered-By
+	}
+
+	# Healthz endpoint from backend
+	handle /healthz {
+		reverse_proxy backend:8000 {
+			header_down -Server
+		}
+	}
+
+	# Readiness probe
+	handle /readyz {
+		reverse_proxy backend:8000 {
+			header_down -Server
+		}
+	}
+
+	# Serve static files for frontend SPA
+	root /srv/frontend
+
+	# SPA routing: if file not found, serve index.html
+	try_files {path} /index.html
+
+	file_server
+}

@@ -1,0 +1,143 @@
+# Open Mail Room Branding Configuration
+# This file controls the appearance and basic settings of Open Mail Room
+# Modify this file and restart containers for changes to take effect
+# Volume mounted at: ./config (see docker-compose.yml)
+
+# === Application Identity ===
+app_name: "Open Mail Room"
+company_name: "範例股份有限公司"
+
+# Logo file path (relative to this config directory)
+# Supported: .svg, .png, .webp (SVG recommended for scalability)
+logo: "./logo.svg"
+
+# === Color Theme ===
+# Primary brand color (used for buttons, links, highlights)
+# Must meet accessibility requirements (see validation below)
+# Examples:
+#   - "#0072B2" (Okabe-Ito safe blue, AAA compliant)
+#   - "#E69F00" (Okabe-Ito orange)
+#   - "#009E73" (Okabe-Ito green)
+#
+# Validation: App will warn at startup if contrast ratio < 4.5:1 against white
+# For dark mode compliance, ensure ≥ 7:1 against #1A1A1A
+primary_color: "#0072B2"
+
+# === Localization ===
+# Supported: zh-TW (Traditional Chinese) | en (English)
+# Additional languages can be added (see docs/LOCALIZATION.md)
+locale: "zh-TW"
+
+# === Operational Settings ===
+# Physical location name (displayed in pickup instructions)
+pickup_location: "一樓櫃台"
+
+# Data retention policy (years)
+# Files and records are automatically anonymized after this period
+# See 01-REQUIREMENTS.md §4 and 07-SECURITY.md §3 for compliance notes
+retention_years: 5
+
+# === Feature Flags ===
+# Enable/disable specific functionality
+features:
+  # Outbound package/mail sending
+  outbound: true
+
+  # Cash On Delivery (COD) tracking
+  cod: true
+
+  # Refrigeration/cold storage flag
+  refrigeration: true
+
+  # Confidential package handling (restricted access, enhanced audit logging)
+  confidential: true
+
+  # Analytics dashboard
+  analytics: true
+
+  # 2FA (TOTP) support
+  two_factor_auth: true
+
+  # API key management
+  api_keys: true
+
+# === Notification Templates ===
+# Override default notification messages (see 05-NOTIFICATIONS.md)
+# If not specified, uses built-in templates
+# Use {variable} syntax for dynamic content (e.g., {recipient_name}, {tracking_number})
+notify_templates:
+  # Sent when package is received and logged
+  received: |
+    您的郵件/包裹已於 {received_date} {received_time} 送達 {pickup_location}。
+    追蹤號碼：{tracking_number}
+    寄件人：{sender_name}
+    請在 {reminder_days} 天內領取。
+
+  # Sent when package is NOT picked up within X days (warning)
+  reminder: |
+    提醒：您的郵件/包裹（{tracking_number}）已在 {pickup_location} {days_unclaimed} 天。
+    請盡快前往領取，或聯繫 {contact_phone}。
+
+  # Sent when package flagged as unclaimed/stranded
+  unclaimed: |
+    您的郵件/包裹（{tracking_number}）超過 {retention_days} 天未領，將進行後續處理。
+    如有疑問請聯繫 {contact_email}。
+
+  # For outbound shipments
+  shipped: |
+    您的交寄單已於 {shipped_date} 寄出。
+    託運單號：{tracking_number}
+    預計送達時間：{estimated_delivery}
+
+# === Document Settings ===
+# Field visibility/requirements (for CSV export, forms)
+document_fields:
+  # Enable/require specific columns in exports and forms
+  recipient_department: true
+  sender_company: true
+  reference_number: true
+  signature_capture: true
+  damage_photos: true
+  cod_amount: true
+  refrigeration_flag: true
+
+# === Contact Information ===
+# Displayed in error messages, footers, help pages
+contact:
+  # Support email (displayed in app)
+  support_email: "mailroom@example.com"
+
+  # Support phone (displayed in notifications)
+  support_phone: "+886-2-1234-5678"
+
+  # Help/knowledge base URL
+  help_url: "https://example.com/mailroom-help"
+
+  # Feedback/issue reporting URL
+  feedback_url: "https://example.com/feedback"
+
+# === Advanced / Internal ===
+# These settings are typically left as defaults
+
+# API rate limiting (requests per minute per IP)
+api_rate_limit_per_minute: 60
+
+# Session timeout (minutes of inactivity)
+session_timeout_minutes: 60
+
+# Whether to allow changing branding via admin API
+# If false, only file edits affect branding
+allow_api_branding_changes: false
+
+# Enable experimental features (dev only)
+experimental_features: false
+
+# --- Validation ---
+# On application startup, the system will:
+# 1. Validate primary_color contrast ratio
+# 2. Verify logo file exists
+# 3. Check locale is supported
+# 4. Parse and compile this YAML
+#
+# If validation fails, warnings appear in logs (style continues with defaults).
+# For production, ensure all required fields are set.

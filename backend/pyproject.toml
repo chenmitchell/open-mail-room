@@ -1,0 +1,18 @@
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+src = ["app", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+# B008: FastAPI's `Depends(...)` / `Header(...)` as a default argument is the
+# idiomatic, documented pattern for declaring dependencies -- not the
+# mutable-default-argument footgun this rule normally guards against.
+ignore = ["B008"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

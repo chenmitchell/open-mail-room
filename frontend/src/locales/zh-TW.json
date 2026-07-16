@@ -1,0 +1,870 @@
+{
+  "app": {
+    "name": "Open Mail Room",
+    "tagline": "收發室管理系統"
+  },
+  "nav": {
+    "dashboard": "收件台",
+    "inbound": "拍照登記",
+    "manualRegister": "手動登記",
+    "pickup": "領取核銷",
+    "search": "查詢",
+    "outbound": "交寄",
+    "myMail": "我的郵件",
+    "notificationSettings": "通知設定",
+    "notificationFailures": "通知失敗清單",
+    "webhooks": "Webhook 設定",
+    "auditLogs": "稽核紀錄",
+    "reports": "報表",
+    "admin": "管理後台",
+    "employees": "員工名錄",
+    "users": "使用者管理",
+    "changePassword": "修改密碼",
+    "logout": "登出",
+    "help": "使用說明",
+    "roleBadge": {
+      "admin": "管理員",
+      "counter": "櫃台",
+      "employee": "員工",
+      "viewer": "唯讀"
+    },
+    "aiSettings": "AI 設定",
+    "group": {
+      "core": "收發作業",
+      "query": "查詢/報表",
+      "self": "我的服務",
+      "admin": "管理後台",
+      "help": "說明"
+    },
+    "departments": "部門管理"
+  },
+  "common": {
+    "loading": "載入中…",
+    "save": "儲存",
+    "cancel": "取消",
+    "confirm": "確認",
+    "close": "關閉",
+    "required": "必填",
+    "optional": "選填",
+    "retry": "重試",
+    "back": "返回",
+    "on": "開",
+    "off": "關"
+  },
+  "auth": {
+    "loginTitle": "登入",
+    "email": "電子郵件",
+    "password": "密碼",
+    "loginSubmit": "登入",
+    "loginError": "帳號或密碼錯誤,請再試一次。",
+    "loginGenericError": "登入失敗,請稍後再試。",
+    "privacyNotice": "本系統僅蒐集完成收發登記所需之個人資料(如姓名、部門、聯絡方式),用於包裹通知與領取核銷,保存期限依系統設定政策(預設 5 年)辦理,期滿將匿名化或刪除。如需查詢或刪除您的個人資料,請聯繫系統管理員。"
+  },
+  "setup": {
+    "title": "首次設定:建立管理員",
+    "intro": "偵測到系統尚未設定任何管理員帳號。請在此建立第一位管理員,建立完成後此頁面將永久關閉。",
+    "email": "電子郵件",
+    "displayName": "顯示名稱",
+    "password": "密碼",
+    "passwordHint": "至少 {min} 個字元。",
+    "confirmPassword": "確認密碼",
+    "submit": "建立管理員",
+    "submitError": "建立管理員失敗,請稍後再試。",
+    "successRedirect": "管理員已建立,請登入。",
+    "errors": {
+      "passwordTooShort": "密碼長度至少需 {min} 個字元。",
+      "passwordMismatch": "兩次輸入的密碼不一致。"
+    }
+  },
+  "status": {
+    "pending": "待確認",
+    "received": "已收件",
+    "notified": "已通知",
+    "pickedUp": "已領取",
+    "reminder": "提醒",
+    "unclaimed": "滯留",
+    "returned": "已退回",
+    "forwarded": "已轉寄",
+    "destroyed": "已銷毀",
+    "outbound": "交寄"
+  },
+  "dashboard": {
+    "title": "收件台",
+    "headerTitle": "今日收發",
+    "greeting": "您好,{name}",
+    "todayPending": "今日待確認",
+    "readyForPickup": "待領取清單",
+    "resultsCaption": "共 {total} 筆",
+    "emptyPending": "目前沒有待確認的件。",
+    "emptyPickup": "目前沒有待領取的件。",
+    "actionPhotoRegister": "拍照登記",
+    "actionBatchUpload": "批次上傳",
+    "actionPickup": "領取核銷",
+    "comingSoonM2": "此功能將於下一階段(含相機拍照與 AI 辨識)推出,目前請使用手動登記。",
+    "statReceivedToday": "今日收件",
+    "statAwaitingPickup": "待領取",
+    "statPickedUpToday": "今日已領取",
+    "statUnclaimed": "滯留待處理",
+    "statMonthVolume": "本月件量",
+    "employeeIntro": "您可以在這裡查看自己的郵件、管理通知綁定,或閱讀使用說明。",
+    "viewerIntro": "您的帳號為唯讀角色,可查詢郵件紀錄與檢視報表統計。"
+  },
+  "inbound": {
+    "title": "手動登記",
+    "mailTypeLabel": "郵件類型",
+    "mailTypePlaceholder": "請選擇郵件類型",
+    "mailType": {
+      "letter": "信件",
+      "document": "文件",
+      "parcel": "包裹",
+      "box": "箱",
+      "pallet": "棧板"
+    },
+    "carrierLabel": "承運商",
+    "carrierPlaceholder": "請選擇承運商(選填)",
+    "trackingNoLabel": "郵件/託運單號",
+    "senderNameLabel": "寄件人姓名",
+    "senderOrgLabel": "寄件人公司",
+    "recipientLabel": "收件人姓名",
+    "matchLoading": "比對員工名錄中…",
+    "matchCandidates": "員工比對候選",
+    "matchHighConfidence": "高信心",
+    "matchMediumConfidence": "請確認",
+    "matchLowConfidence": "低信心",
+    "matchSelected": "已對應至員工名錄,將自動帶出部門。",
+    "confidentialLabel": "機密件",
+    "confidentialHint": "機密件不會拍攝內容照片,通知訊息也不會顯示寄件人資訊。",
+    "codLabel": "貨到付款",
+    "codAmountLabel": "貨到付款金額",
+    "refrigerationLabel": "冷藏/冷凍",
+    "refrigeration": {
+      "none": "不需冷藏",
+      "chilled": "冷藏",
+      "frozen": "冷凍"
+    },
+    "sizeNoteLabel": "尺寸/重量備註",
+    "noteLabel": "備註",
+    "submit": "儲存並發送通知",
+    "submitSuccess": "已建立收件紀錄 {itemNo},系統將自動發送通知。",
+    "errors": {
+      "mailTypeRequired": "請選擇郵件類型。",
+      "recipientRequired": "請輸入收件人姓名。",
+      "recipientTooLong": "收件人姓名過長(上限 200 字)。",
+      "trackingTooLong": "單號過長(上限 200 字)。",
+      "senderNameTooLong": "寄件人姓名過長(上限 200 字)。",
+      "senderOrgTooLong": "寄件人公司過長(上限 200 字)。",
+      "codAmountRequired": "已開啟貨到付款,請輸入金額。",
+      "codAmountInvalid": "請輸入大於 0 的金額。",
+      "noteTooLong": "備註過長(上限 1000 字)。"
+    },
+    "camera": {
+      "title": "拍照登記",
+      "openCamera": "開啟相機",
+      "fileFallbackHint": "點選下方按鈕開啟相機拍照。",
+      "unavailable": "無法啟用即時相機預覽,已切換為拍照按鈕模式。",
+      "scanning": "掃描條碼中…",
+      "barcodeDetected": "已掃到條碼:{value}",
+      "captureNew": "拍照(新的一件)",
+      "captureSame": "＋加拍同件",
+      "groupListLabel": "已拍攝的件",
+      "groupLabel": "第 {n} 件",
+      "photoAlt": "郵件標籤照片",
+      "previewUnsupported": "此照片格式無法即時預覽(如 iPhone HEIC),已擷取,上傳後仍會辨識。",
+      "retake": "刪除重拍",
+      "submit": "上傳並辨識",
+      "offlineBanner": "目前離線,拍攝內容將排入佇列,恢復連線後自動補送。",
+      "queuedOffline": "目前離線,已將 {count} 件排入佇列,恢復連線後將自動補送。",
+      "jobsCreated": "已建立 {count} 件的 AI 辨識工作,請至確認頁完成確認。",
+      "frontBackHint": "掛號或包裹務必把條碼/郵件編號拍進畫面(可按『＋加拍同件』補拍條碼那面);平信免。寄件人與收件人在正面,正反兩張都拍 AI 更準。"
+    },
+    "batch": {
+      "title": "批次上傳",
+      "selectFiles": "選擇照片(最多 30 張)",
+      "tooMany": "一次最多選擇 {max} 張照片,請減少選取數量。",
+      "mergeSelected": "合併所選為一件({count})",
+      "selectForMerge": "選取以合併",
+      "remove": "移除",
+      "status": {
+        "pending": "待上傳",
+        "uploading": "上傳中…",
+        "uploaded": "已上傳",
+        "failed": "上傳失敗"
+      },
+      "uploadAll": "上傳全部",
+      "retryFailed": "重試失敗項目",
+      "createJobs": "建立 AI 辨識工作",
+      "queuedOffline": "目前離線,已將 {count} 件排入佇列,恢復連線後將自動補送。"
+    },
+    "confirm": {
+      "title": "OCR 確認",
+      "step": "步驟 2 / 3",
+      "empty": "目前沒有待確認的辨識結果。",
+      "queueStatus": "佇列中還有 {remaining} 件待確認",
+      "polling": "AI 辨識進行中,請稍候…",
+      "timeout": "AI 辨識逾時,請重試或改用手動登記。",
+      "failed": "AI 辨識失敗,請改用手動登記完成此件登記。",
+      "lowConfidenceHint": "AI 辨識信心偏低,請確認此欄位。",
+      "photoLoadError": "照片載入失敗,請重新整理或檢查網路連線。",
+      "confirmButton": "確認並建立紀錄",
+      "skip": "略過此件",
+      "submitSuccess": "已建立收件紀錄 {itemNo},系統將自動發送通知。",
+      "deptSectionLabel": "或改為「部門件」→ 送交部門聯絡人:",
+      "deptContact": "→ 聯絡人:{name}",
+      "deptNoContact": "(此部門尚未設定聯絡人,請先至部門管理設定)",
+      "deptSet": "已設為部門件:{name},將通知該部門聯絡人領取。",
+      "capturedAt": "拍攝於 {time}"
+    },
+    "trackingNoPlaceholder": "例如:1234567890"
+  },
+  "offlineQueue": {
+    "offlineWithCount": "離線,已排入佇列({count})",
+    "syncing": "佇列同步中({count})"
+  },
+  "pickup": {
+    "title": "領取核銷",
+    "lookupModeLabel": "查詢方式",
+    "lookupByName": "搜尋姓名",
+    "lookupByCode": "輸入取件碼",
+    "selectedEmployee": "{name} 的待領取件",
+    "noPendingItems": "此員工目前沒有待領取的件。",
+    "pickedUpByLabel": "領取人姓名(本人或代領人)",
+    "methodLabel": "核銷方式",
+    "methodSignature": "觸控簽名",
+    "methodCode": "取件碼核銷",
+    "verifyCodeLabel": "取件碼",
+    "signatureLabel": "簽名板",
+    "signatureHint": "請用手指或觸控筆在框內簽名。若無法簽名,請改用取件碼核銷。",
+    "signatureClear": "清除重簽",
+    "submit": "確認領取",
+    "resultSuccess": "領取成功",
+    "errors": {
+      "nameNotFound": "找不到符合姓名的在職員工。",
+      "codeNotFound": "找不到符合的取件碼。",
+      "pickedUpByRequired": "請輸入領取人姓名。",
+      "noItemsSelected": "請至少選擇一件要領取的郵件。",
+      "signatureRequired": "請先完成簽名。",
+      "codeRequired": "請輸入取件碼。"
+    }
+  },
+  "search": {
+    "title": "查詢",
+    "keywordLabel": "關鍵字(單號/姓名/部門)",
+    "statusLabel": "狀態",
+    "anyStatus": "全部狀態",
+    "carrierLabel": "承運商",
+    "anyCarrier": "全部承運商",
+    "departmentLabel": "部門",
+    "anyDepartment": "全部部門",
+    "dateFromLabel": "日期(起)",
+    "dateToLabel": "日期(迄)",
+    "apply": "套用篩選",
+    "reset": "清除篩選",
+    "empty": "沒有符合條件的紀錄。",
+    "resultsCaption": "共 {total} 筆",
+    "colItemNo": "流水號",
+    "colStatus": "狀態",
+    "colRecipient": "收件人",
+    "colDepartment": "部門",
+    "colCarrier": "承運商",
+    "colReceivedAt": "收到時間",
+    "colActions": "操作",
+    "viewDetail": "查看詳情",
+    "detailTitle": "郵件詳情",
+    "paginationLabel": "分頁",
+    "prevPage": "上一頁",
+    "nextPage": "下一頁",
+    "pageIndicator": "第 {page} / {totalPages} 頁"
+  },
+  "employees": {
+    "title": "員工名錄管理",
+    "addNew": "新增員工",
+    "importCsv": "CSV 匯入",
+    "importSummary": "匯入完成:共 {total} 筆,成功 {succeeded} 筆,失敗 {failed} 筆。",
+    "importRowError": "第 {row} 列:{message}",
+    "colName": "姓名",
+    "colDepartment": "部門",
+    "colExt": "分機",
+    "colStatus": "狀態",
+    "colActions": "操作",
+    "statusActive": "在職",
+    "statusInactive": "離職",
+    "edit": "編輯",
+    "addTitle": "新增員工",
+    "editTitle": "編輯員工",
+    "aliasesLabel": "別名/英文名",
+    "aliasesHint": "多個別名請用逗號分隔,供 OCR 姓名比對使用。",
+    "extLabel": "分機",
+    "emailLabel": "Email",
+    "phoneLabel": "電話",
+    "errors": {
+      "nameRequired": "請輸入姓名。"
+    },
+    "downloadTemplate": "下載 CSV 範本",
+    "empty": "尚無員工資料。"
+  },
+  "offline": {
+    "title": "目前離線",
+    "message": "偵測不到網路連線。部分功能(如拍照登記)在離線時仍可操作,恢復連線後會自動補送。",
+    "retry": "重新連線"
+  },
+  "myMail": {
+    "title": "我的郵件",
+    "pickupCodeLabel": "我的取件碼",
+    "pickupCodeHint": "至櫃台領取包裹時,出示此取件碼即可核銷。",
+    "noPickupCode": "尚未取得取件碼,請聯繫管理員。",
+    "pendingTitle": "待領清單",
+    "emptyPending": "目前沒有待領取的郵件。",
+    "historyTitle": "歷史紀錄",
+    "emptyHistory": "目前沒有歷史紀錄。",
+    "loadMore": "載入更多",
+    "colSender": "寄件人",
+    "colPickedUpAt": "領取時間"
+  },
+  "notificationSettings": {
+    "title": "通知設定",
+    "bindingsTitle": "已綁定通道",
+    "emptyBindings": "尚未綁定任何通知通道。",
+    "channel": {
+      "line": "LINE",
+      "telegram": "Telegram",
+      "slack": "Slack",
+      "discord": "Discord",
+      "email": "Email",
+      "webhook": "Webhook",
+      "webpush": "瀏覽器推播"
+    },
+    "verified": "已驗證",
+    "unverified": "待驗證",
+    "unbind": "解除綁定",
+    "unbindConfirmTitle": "確認解除綁定",
+    "unbindConfirmMessage": "確定要解除「{channel}」通知綁定嗎?解除後將不會再收到此通道的通知。",
+    "wizard": {
+      "lineTitle": "綁定 LINE",
+      "telegramTitle": "綁定 Telegram",
+      "step1Line": "1. 掃描 QR Code 或搜尋加入公司 LINE 官方帳號好友。",
+      "step2Line": "2. 在對話框中傳送以下 6 位綁定碼給官方帳號。",
+      "step1Telegram": "1. 點擊下方按鈕開啟 Telegram 並啟動機器人對話。",
+      "step2Telegram": "2. 機器人會自動收到綁定碼,無需手動輸入。",
+      "openTelegram": "開啟 Telegram",
+      "codeLabel": "綁定碼",
+      "waiting": "等待綁定完成中…",
+      "expiresIn": "此綁定碼將於 {minutes} 分鐘後失效。",
+      "success": "綁定成功!",
+      "timeout": "綁定逾時,請重新產生綁定碼。",
+      "retry": "重新產生綁定碼",
+      "cancel": "取消綁定",
+      "error": "無法產生綁定碼,請稍後再試。"
+    },
+    "directForm": {
+      "addressLabel": {
+        "email": "Email 地址",
+        "slack": "Slack Webhook URL",
+        "discord": "Discord Webhook URL",
+        "webhook": "Webhook URL"
+      },
+      "submit": "新增綁定",
+      "errors": {
+        "addressRequired": "請輸入地址。",
+        "emailInvalid": "請輸入有效的 Email 地址。",
+        "urlInvalid": "請輸入有效的網址(需以 https:// 開頭)。"
+      }
+    }
+  },
+  "notificationFailures": {
+    "title": "通知失敗清單",
+    "empty": "目前沒有失敗的通知。",
+    "colItem": "郵件編號",
+    "colRecipient": "收件人",
+    "colChannel": "通道",
+    "colTemplate": "訊息類型",
+    "colError": "錯誤訊息",
+    "colRetries": "重試次數",
+    "colSentAt": "最後嘗試時間",
+    "colActions": "操作",
+    "resend": "重新發送",
+    "resendSuccess": "已重新發送通知。",
+    "resendError": "重新發送失敗。",
+    "template": {
+      "received": "到件通知",
+      "reminder": "提醒通知",
+      "overdue": "逾期通知"
+    }
+  },
+  "webhooksAdmin": {
+    "title": "Webhook 設定",
+    "addNew": "新增 Webhook",
+    "colName": "名稱",
+    "colUrl": "URL",
+    "colEvents": "訂閱事件",
+    "colStatus": "狀態",
+    "colLastSuccess": "最後成功時間",
+    "colActions": "操作",
+    "statusActive": "啟用中",
+    "statusInactive": "已停用",
+    "failureCount": "連續失敗 {count} 次",
+    "empty": "尚未設定任何 Webhook。",
+    "nameLabel": "名稱",
+    "urlLabel": "URL",
+    "eventsLabel": "訂閱事件",
+    "event": {
+      "item": {
+        "received": "已收件",
+        "notified": "已通知",
+        "reminder": "已提醒",
+        "picked_up": "已領取",
+        "returned": "已退回",
+        "unclaimed": "逾期未領"
+      },
+      "outbound": {
+        "shipped": "已交寄"
+      }
+    },
+    "save": "儲存",
+    "test": "測試",
+    "toggleActivate": "啟用",
+    "toggleDeactivate": "停用",
+    "secretRevealTitle": "Webhook 已建立",
+    "secretRevealMessage": "請立即複製以下簽章密鑰,離開此頁面後將無法再次查看。",
+    "secretLabel": "簽章密鑰",
+    "testResultTitle": "測試結果",
+    "testSuccess": "測試成功(HTTP {status})",
+    "testFailure": "測試失敗:{message}",
+    "errors": {
+      "nameRequired": "請輸入名稱。",
+      "urlRequired": "請輸入 URL。",
+      "urlInvalid": "請輸入有效的網址(需以 https:// 開頭)。",
+      "eventsRequired": "請至少選擇一個訂閱事件。"
+    }
+  },
+  "usersAdmin": {
+    "title": "使用者管理",
+    "addNew": "新增使用者",
+    "searchLabel": "搜尋(Email/顯示名稱)",
+    "roleLabel": "角色",
+    "rolePlaceholder": "請選擇角色",
+    "anyRole": "全部角色",
+    "statusLabel": "狀態",
+    "anyStatus": "全部狀態",
+    "apply": "套用篩選",
+    "reset": "清除篩選",
+    "empty": "尚無使用者資料。",
+    "resultsCaption": "共 {total} 筆",
+    "colEmail": "Email",
+    "colDisplayName": "顯示名稱",
+    "colRole": "角色",
+    "colStatus": "狀態",
+    "colLastLogin": "最後登入",
+    "colEmployee": "連結員工",
+    "colActions": "操作",
+    "statusActive": "啟用",
+    "statusInactive": "停用",
+    "edit": "編輯",
+    "activate": "啟用",
+    "deactivate": "停用",
+    "resetPasswordAction": "重設密碼",
+    "addTitle": "新增使用者",
+    "editTitle": "編輯使用者",
+    "emailLabel": "Email",
+    "displayNameLabel": "顯示名稱",
+    "passwordLabel": "密碼",
+    "passwordHint": "至少 10 個字元。",
+    "activeToggleLabel": "帳號啟用",
+    "employeeIdLabel": "連結員工 ID",
+    "employeeIdHint": "選填。輸入員工名錄 ID 以連結此帳號與員工資料(例如顯示對應的取件碼)。",
+    "deactivateConfirmTitle": "確認停用使用者",
+    "deactivateConfirmMessage": "確定要停用「{email}」的帳號嗎?停用後該使用者將無法登入。",
+    "resetPassword": {
+      "title": "重設密碼",
+      "message": "為「{email}」設定新密碼。",
+      "newPasswordLabel": "新密碼",
+      "submit": "重設密碼",
+      "success": "已重設「{email}」的密碼。"
+    },
+    "paginationLabel": "分頁",
+    "prevPage": "上一頁",
+    "nextPage": "下一頁",
+    "pageIndicator": "第 {page} / {totalPages} 頁",
+    "errors": {
+      "emailRequired": "請輸入 Email。",
+      "displayNameRequired": "請輸入顯示名稱。",
+      "roleRequired": "請選擇角色。",
+      "passwordRequired": "請輸入密碼。",
+      "passwordTooShort": "密碼長度至少需 10 個字元。",
+      "emailExists": "此 Email 已被使用。",
+      "weakPassword": "密碼長度至少需 10 個字元。",
+      "employeeNotFound": "找不到對應的員工資料,請確認員工 ID。",
+      "lastAdmin": "不能停用或降級最後一位管理員。"
+    }
+  },
+  "changePassword": {
+    "title": "修改密碼",
+    "currentPasswordLabel": "目前密碼",
+    "newPasswordLabel": "新密碼",
+    "passwordHint": "至少 10 個字元。",
+    "submit": "修改密碼",
+    "success": "密碼已修改成功。",
+    "errors": {
+      "currentPasswordRequired": "請輸入目前密碼。",
+      "currentPasswordInvalid": "目前密碼不正確。",
+      "passwordTooShort": "密碼長度至少需 10 個字元。"
+    }
+  },
+  "errors": {
+    "network": "網路連線異常,請檢查連線後再試。",
+    "unauthorized": "登入已逾期,請重新登入。",
+    "generic": "發生錯誤,請稍後再試。",
+    "rateLimited": "嘗試次數過多,請稍後再試。"
+  },
+  "outbound": {
+    "title": "交寄",
+    "createTitle": "建立交寄單",
+    "listTitle": "交寄清單",
+    "applicantLabel": "申請人",
+    "applicantHint": "已預帶您的姓名;如需替他人交寄,請重新輸入姓名以搜尋。",
+    "applicantMatchLoading": "比對中…",
+    "applicantMatched": "已比對到員工",
+    "departmentLabel": "部門",
+    "departmentPlaceholder": "請選擇部門",
+    "toNameLabel": "收件人姓名",
+    "toOrgLabel": "收件人公司",
+    "toAddressLabel": "收件地址",
+    "toPhoneLabel": "收件人電話",
+    "carrierLabel": "承運商",
+    "carrierPlaceholder": "請選擇承運商",
+    "paymentLabel": "付款方式",
+    "paymentPlaceholder": "請選擇付款方式",
+    "payment": {
+      "company": "公司月結",
+      "dept_code": "部門代碼",
+      "personal": "自付"
+    },
+    "costLabel": "費用",
+    "noteLabel": "備註",
+    "submit": "建立交寄單",
+    "submitSuccess": "已建立交寄單 {itemNo}",
+    "errors": {
+      "toNameRequired": "請輸入收件人姓名",
+      "toNameTooLong": "收件人姓名過長",
+      "toOrgTooLong": "收件人公司名稱過長",
+      "toAddressTooLong": "收件地址過長",
+      "toPhoneTooLong": "收件人電話過長",
+      "noteTooLong": "備註過長",
+      "costInvalid": "費用需為正數"
+    },
+    "filterStatusLabel": "狀態",
+    "anyStatus": "全部狀態",
+    "filterApply": "套用篩選",
+    "filterReset": "清除篩選",
+    "empty": "沒有符合條件的交寄紀錄。",
+    "resultsCaption": "共 {total} 筆",
+    "colItemNo": "流水號",
+    "colApplicant": "申請人",
+    "colRecipient": "收件人",
+    "colDepartment": "部門",
+    "colCarrier": "承運商",
+    "colStatus": "狀態",
+    "colShippedAt": "交寄時間",
+    "colActions": "操作",
+    "markShipped": "標記已交寄",
+    "status": {
+      "pending": "待交寄",
+      "shipped": "已交寄",
+      "delivered": "已送達",
+      "exception": "異常"
+    },
+    "shippedDialogTitle": "標記已交寄",
+    "trackingNoLabel": "託運單號",
+    "trackingNoHint": "可手動輸入,或拍照後用 OCR 辨識帶入。",
+    "photoLabel": "託運單照片",
+    "runOcr": "OCR 辨識單號",
+    "ocrRunning": "辨識中…",
+    "ocrSuccess": "已帶入辨識結果",
+    "ocrFailed": "辨識失敗,請手動輸入單號。",
+    "confirmShipped": "確認已交寄",
+    "shippedSuccess": "已標記為已交寄",
+    "paginationLabel": "分頁",
+    "prevPage": "上一頁",
+    "nextPage": "下一頁",
+    "pageIndicator": "第 {page} / {totalPages} 頁",
+    "toNamePlaceholder": "例如:王小明",
+    "trackingNoPlaceholder": "例如:1234567890"
+  },
+  "otherField": {
+    "carrierLabel": "其他承運商名稱",
+    "mailTypeLabel": "其他郵件類型名稱",
+    "paymentLabel": "其他付款方式說明",
+    "notePrefixCarrier": "承運商(其他)",
+    "notePrefixMailType": "郵件類型(其他)",
+    "notePrefixPayment": "付款方式(其他)",
+    "errors": {
+      "carrierRequired": "已選擇「其他」,請輸入其他承運商名稱。",
+      "mailTypeRequired": "已選擇「其他」,請輸入其他郵件類型名稱。",
+      "paymentRequired": "已選擇「其他」,請輸入其他付款方式說明。"
+    }
+  },
+  "reports": {
+    "title": "報表",
+    "fromLabel": "起始日期",
+    "toLabel": "結束日期",
+    "groupByLabel": "分組方式",
+    "groupBy": {
+      "department": "部門",
+      "carrier": "承運商",
+      "day": "日"
+    },
+    "apply": "套用",
+    "statReceived": "收件總數",
+    "statPickedUp": "已領取總數",
+    "statUnclaimed": "滯留總數",
+    "statAvgPickupHours": "平均領取時間(小時)",
+    "statOutboundShipped": "交寄總數",
+    "chartTitle": "收件量長條圖",
+    "chartAriaLabel": "長條圖,詳細數值請見下方表格。",
+    "tableTitle": "明細表格",
+    "colReceived": "收件數",
+    "colPickedUp": "已領取",
+    "colUnclaimed": "滯留",
+    "colAvgPickupHours": "平均領取時數",
+    "colOutboundShipped": "交寄量",
+    "empty": "此區間沒有資料。",
+    "exportTitle": "匯出",
+    "exportItems": "匯出郵件明細(items.csv)",
+    "exportOutbound": "匯出交寄明細(outbound.csv)"
+  },
+  "auditLogs": {
+    "title": "稽核紀錄",
+    "filterActorLabel": "操作者 ID",
+    "filterActionLabel": "動作",
+    "filterTargetTypeLabel": "對象類型",
+    "filterTargetIdLabel": "對象 ID",
+    "dateFromLabel": "日期(起)",
+    "dateToLabel": "日期(迄)",
+    "apply": "套用篩選",
+    "reset": "清除篩選",
+    "empty": "沒有符合條件的稽核紀錄。",
+    "resultsCaption": "共 {total} 筆",
+    "colAt": "時間",
+    "colActor": "操作者",
+    "colAction": "動作",
+    "colTarget": "對象",
+    "colIp": "IP",
+    "colActions": "操作",
+    "viewDiff": "檢視變更內容",
+    "diffTitle": "變更內容",
+    "diffEmpty": "無變更內容紀錄。",
+    "paginationLabel": "分頁",
+    "prevPage": "上一頁",
+    "nextPage": "下一頁",
+    "pageIndicator": "第 {page} / {totalPages} 頁"
+  },
+  "aiSettings": {
+    "title": "AI 設定",
+    "statusTitle": "目前狀態",
+    "formTitle": "設定",
+    "keyLabel": "AI 金鑰",
+    "keyPresent": "已設定",
+    "keyMissing": "未設定",
+    "keyMissingHint": "API 金鑰請設定在主機環境變數 AI_API_KEY(或 GEMINI_API_KEY),基於安全不在此輸入。",
+    "providerLabel": "供應商",
+    "usageLabel": "今日已用",
+    "usageValue": "{used} / {limit} 次",
+    "modelLabel": "模型",
+    "modelHint": "選擇要使用的模型,或維持自動偵測(建議)。",
+    "autoDetect": "自動偵測(建議)",
+    "noKeyWarning": "請先設定環境變數金鑰",
+    "modelsUnavailable": "無法取得模型清單,請稍後再試,或維持自動偵測。",
+    "limitLabel": "每日請求上限",
+    "limitHint": "防止濫用,預設 10000 次/日。",
+    "save": "儲存",
+    "saveSuccess": "設定已儲存。",
+    "errors": {
+      "limitRange": "請輸入 1 到 100000 之間的整數。"
+    }
+  },
+  "help": {
+    "hintAriaLabel": "使用說明",
+    "tocLabel": "本頁章節",
+    "title": "使用說明",
+    "intro": {
+      "title": "系統簡介",
+      "items": [
+        "Open Mail Room 協助公司管理收發室的包裹與郵件:登記收件、AI 辨識、通知收件人、櫃台核銷領取、交寄與報表統計。",
+        "系統依角色(管理員/櫃台/員工/唯讀)顯示不同的功能與畫面,登入後只會看到與自己工作相關的項目。"
+      ]
+    },
+    "loginLogout": {
+      "title": "如何登入/登出",
+      "items": [
+        "在登入頁輸入您的 Email 與密碼,點擊「登入」即可進入系統。",
+        "登入後,可在左側導覽列(手機版在畫面下方)找到「登出」按鈕結束使用;若使用共用裝置,離開前請務必登出。"
+      ]
+    },
+    "myMailCommon": {
+      "title": "如何看自己的郵件",
+      "items": [
+        "點擊左側導覽的「我的郵件」,即可看到指定給您的待領清單與歷史紀錄。",
+        "若您的帳號已對應到員工名錄,頁面上方會顯示您的專屬取件碼,至櫃台領取包裹時可出示核銷。"
+      ]
+    },
+    "employee": {
+      "title": "一般員工",
+      "myMail": {
+        "title": "我的郵件",
+        "items": [
+          "「我的郵件」會列出目前待領取的包裹,以及過去已領取/處理完成的歷史紀錄。",
+          "點選清單項目可查看寄件人、收件時間等詳細資訊。"
+        ]
+      },
+      "notifications": {
+        "title": "綁定通知(LINE/Email…)",
+        "items": [
+          "在「通知設定」頁可綁定 LINE、Telegram、Email 等通知管道,有包裹到件或提醒時會即時通知您。",
+          "LINE/Telegram 採「綁定碼」流程:依畫面指示掃碼或加入官方帳號後,將顯示的 6 位數綁定碼傳送給機器人即可完成綁定。",
+          "Email 等其他管道可直接輸入地址送出,系統會標示「待驗證/已驗證」狀態。",
+          "不需要的通道可隨時點擊「解除綁定」移除。"
+        ]
+      },
+      "pickupCode": {
+        "title": "取件碼怎麼用",
+        "items": [
+          "取件碼是您專屬的領取憑證,顯示在「我的郵件」頁面上方。",
+          "至櫃台領取包裹時,出示或告知這組取件碼,櫃台人員即可快速核銷領取,不需要簽名。",
+          "取件碼具隱私性,請勿任意提供給非本人領取的對象,除非您委託對方代領。"
+        ]
+      }
+    },
+    "counter": {
+      "title": "櫃台",
+      "inboundRegister": {
+        "title": "收件登記(手動/拍照/批次)",
+        "items": [
+          "手動登記:於「手動登記」頁逐欄位輸入郵件類型、收件人等資訊後送出,系統會自動比對員工名錄並發送通知。",
+          "拍照登記:於「拍照登記」頁使用相機即時拍攝郵件標籤,系統會嘗試掃描條碼並交給 AI 辨識;可連續拍攝多件或替同一件加拍多張照片。",
+          "批次上傳:一次選取多張照片(最多 30 張)上傳,可框選多張合併為同一件,再統一建立 AI 辨識工作。",
+          "三種方式皆可搭配「OCR 確認」頁完成最終確認與建檔;系統離線時拍照/批次資料會排入佇列,恢復連線後自動補送。"
+        ]
+      },
+      "ocrConfirm": {
+        "title": "OCR 確認",
+        "items": [
+          "AI 辨識完成後,會在「OCR 確認」頁逐件顯示辨識結果,左側為照片、右側為可編輯欄位。",
+          "信心值偏低的欄位會特別標示,請仔細核對後再確認;所有欄位皆可手動修改。",
+          "確認後會建立正式收件紀錄並自動發送通知;也可選擇「略過此件」稍後再處理。"
+        ]
+      },
+      "pickup": {
+        "title": "領取核銷",
+        "items": [
+          "可用「搜尋姓名」或「輸入取件碼」兩種方式找到待領取的員工與其包裹。",
+          "勾選欲領取的包裹後,輸入實際領取人姓名(本人或代領人)。",
+          "核銷方式可選擇「觸控簽名」或「取件碼核銷」;若無法簽名,建議改用取件碼核銷。",
+          "確認送出後,系統會即時顯示每件包裹的核銷結果。"
+        ]
+      },
+      "outbound": {
+        "title": "交寄",
+        "items": [
+          "於「交寄」頁建立交寄單:輸入申請人(系統會自動比對員工名錄)、收件人資訊、承運商與付款方式後送出。",
+          "包裹實際交寄後,於清單點擊「標記已交寄」,可手動輸入託運單號,或拍照後用 OCR 辨識自動帶入單號。",
+          "可依狀態(待交寄/已交寄/已送達/異常)篩選交寄清單。"
+        ]
+      },
+      "search": {
+        "title": "查詢",
+        "items": [
+          "「查詢」頁可依關鍵字(單號/姓名/部門)、狀態、承運商、部門與日期區間搜尋收件紀錄。",
+          "點擊「查看詳情」可展開單一郵件的完整資訊。"
+        ]
+      }
+    },
+    "admin": {
+      "title": "管理員",
+      "employees": {
+        "title": "員工名錄管理與 CSV 匯入",
+        "items": [
+          "於「員工名錄」頁可新增/編輯員工資料(姓名、別名、部門、分機、Email、電話、在職狀態)。",
+          "「別名」欄位可填寫員工的英文名或常見別稱,用來提升 OCR/手動輸入時姓名自動比對的準確度。",
+          "可點擊「下載 CSV 範本」取得標準欄位格式,填妥後用「CSV 匯入」批次建立/更新員工資料,匯入完成後會顯示成功/失敗筆數與逐列錯誤原因。"
+        ]
+      },
+      "aiSettings": {
+        "title": "AI 設定",
+        "items": [
+          "「AI 設定」頁顯示目前 AI 金鑰狀態(已設定/未設定)、供應商與今日已用/上限次數。API 金鑰須在主機環境變數(AI_API_KEY 或 GEMINI_API_KEY)設定,基於安全考量無法在此頁輸入。",
+          "可從下拉選單選擇要使用的模型,或維持「自動偵測(建議)」;清單由系統即時查詢可用模型取得,若尚未設定金鑰則下拉會停用。",
+          "「每日請求上限」用於防止濫用,預設 10000 次/日,可依需求調整(1–100000)。"
+        ]
+      },
+      "webhooks": {
+        "title": "通知 Webhook",
+        "items": [
+          "於「Webhook 設定」頁可新增外部系統的 Webhook 端點,並選擇要訂閱的事件(如到件、領取、交寄已出貨等)。",
+          "建立時會顯示一次簽章密鑰(用於驗證來源),離開頁面後將無法再次查看,請立即複製保存。",
+          "可使用「測試」按鈕確認端點是否正常回應;連續失敗會顯示失敗次數,必要時可停用該端點。",
+          "「通知失敗清單」頁可查看寄送失敗的通知並手動重新發送。"
+        ]
+      },
+      "auditLogs": {
+        "title": "稽核紀錄",
+        "items": [
+          "「稽核紀錄」頁記錄誰在何時建立/修改/刪除/查看了哪筆資料,包含機密件的查看紀錄。",
+          "可依操作者、動作、對象類型/ID 與日期區間篩選,並可檢視每筆紀錄的詳細變更內容。"
+        ]
+      },
+      "retention": {
+        "title": "保存期限",
+        "items": [
+          "系統依隱私權政策保存個人資料(如姓名、部門、聯絡方式),預設保存期限為 5 年,期滿後將匿名化或刪除。",
+          "如需調整保存期限或協助使用者行使查詢/刪除個人資料的權利,請透過系統管理設定或聯繫技術負責人處理。"
+        ]
+      }
+    },
+    "viewer": {
+      "title": "唯讀權限說明",
+      "items": [
+        "您的帳號為「唯讀」角色,可使用「查詢」與「報表」頁面檢視收件與交寄紀錄,但無法新增、編輯或核銷任何資料。",
+        "如需異動資料,請聯繫櫃台人員或系統管理員。"
+      ]
+    },
+    "hint": {
+      "dashboard": "此為收件台首頁,可快速前往拍照登記、批次上傳與領取核銷,並檢視今日收件統計與待領取清單。",
+      "myMail": "檢視指定給您的待領取包裹與歷史紀錄,並可查看您的專屬取件碼。",
+      "inboundRegister": "手動輸入郵件資訊建立收件紀錄,適合沒有相機或單件快速登記的情境。",
+      "photoRegister": "使用相機拍攝郵件標籤,系統會自動掃描條碼並交由 AI 辨識收件資訊。",
+      "batchUpload": "一次選取多張照片上傳,可框選合併為同一件後批次建立 AI 辨識工作。",
+      "ocrConfirm": "核對 AI 辨識結果,信心值偏低的欄位會特別標示,確認無誤後建立正式收件紀錄。",
+      "pickup": "以姓名或取件碼查詢待領取包裹,並透過簽名或取件碼完成領取核銷。",
+      "outbound": "建立交寄單、上傳託運單照片辨識單號,並追蹤交寄狀態。",
+      "reports": "依日期區間與部門/承運商/日分組檢視收件與交寄統計,並可匯出明細 CSV。",
+      "search": "依單號、姓名、部門、狀態等條件查詢郵件紀錄並檢視詳情。",
+      "employees": "管理員工名錄資料,可新增/編輯員工,或用 CSV 批次匯入。",
+      "auditLogs": "檢視系統操作紀錄,包含誰在何時建立/修改/刪除/查看了哪筆資料。",
+      "employeesCsvTemplate": "CSV 欄位需為:name(姓名)、aliases(別名,以分號分隔)、department_code(部門代碼)、ext(分機)、email、phone。下載範本依格式填寫後即可匯入。",
+      "inboundCarrier": "承運商為選填,用於之後查詢與報表統計;若清單沒有符合的選項可留空。",
+      "inboundTrackingNo": "請輸入郵件或託運單上的號碼;若無單號可留空,系統仍會產生內部流水號。",
+      "inboundRecipientMatch": "系統會依姓名自動比對員工名錄:分數 ≥90 自動帶入、70–90 會列出候選供您確認、<70 則需手動輸入部門。",
+      "outboundCarrier": "選擇實際交寄的託運商,會顯示於交寄清單與報表統計中。",
+      "outboundPayment": "選擇此次交寄費用的付款方式:公司月結、部門代碼或申請人自付。",
+      "outboundApplicantMatch": "系統會依申請人姓名自動比對員工名錄,規則與收件登記相同(≥90 自動帶入、70–90 列候選)。",
+      "outboundTrackingNo": "可手動輸入託運單號,或拍照後點擊「OCR 辨識單號」自動帶入。",
+      "aiSettings": "設定 AI 辨識供應商的模型選擇與每日呼叫上限。",
+      "usersAdmin": "管理系統使用者帳號、角色權限與啟用狀態。",
+      "notificationSettings": "設定您的通知綁定管道(LINE/Telegram/Email 等),包收件通知會送到哪裡。",
+      "notificationFailures": "檢視通知發送失敗的紀錄,可查看原因並重試發送。"
+    }
+  },
+  "departments": {
+    "title": "部門管理",
+    "help": "設定各部門的聯絡人;收到只寫公司/部門、沒有具體個人的信件時,系統會通知該部門聯絡人來領。",
+    "intro": "為每個部門指定一位聯絡人(通常是主管或指定收件人)。收到「部門件」時會通知這位聯絡人。",
+    "name": "部門名稱",
+    "code": "部門代碼",
+    "contact": "聯絡人",
+    "noContact": "(未設定)",
+    "unknownContact": "(聯絡人已停用或不存在)",
+    "addButton": "新增部門",
+    "created": "已新增部門。",
+    "contactSaved": "已更新「{name}」的聯絡人。",
+    "empty": "尚無部門。可用上方表單新增,或匯入員工時自動建立。"
+  }
+}

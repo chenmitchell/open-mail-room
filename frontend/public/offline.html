@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Open Mail Room - 離線</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          'PingFang TC',
+          'Noto Sans TC',
+          sans-serif;
+        background: #ffffff;
+        color: #1a1a1a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 24px;
+      }
+      .card {
+        max-width: 420px;
+        text-align: center;
+      }
+      h1 {
+        font-size: 24px;
+        margin-bottom: 12px;
+      }
+      p {
+        line-height: 1.6;
+        color: #4a4a4a;
+      }
+      button {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 8px 24px;
+        margin-top: 16px;
+        border-radius: 8px;
+        border: 2px solid #0072b2;
+        background: #0072b2;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button:focus-visible {
+        outline: 3px solid #0072b2;
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>目前離線</h1>
+      <p>偵測不到網路連線。部分功能(如拍照登記)在離線時仍可操作,恢復連線後會自動補送。</p>
+      <button onclick="location.reload()">重新連線</button>
+    </div>
+  </body>
+</html>

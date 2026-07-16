@@ -1,0 +1,44 @@
+{
+  "name": "openmailroom-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "type-check": "vue-tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src tests --ext .vue,.ts"
+  },
+  "dependencies": {
+    "@zxing/browser": "^0.2.1",
+    "@zxing/library": "^0.23.0",
+    "idb": "^8.0.3",
+    "pinia": "^2.1.7",
+    "vue": "^3.5.13",
+    "vue-i18n": "^9.14.2",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@intlify/unplugin-vue-i18n": "6.0.8",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.14.2",
+    "@typescript-eslint/eslint-plugin": "^7.7.0",
+    "@typescript-eslint/parser": "^7.7.0",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/test-utils": "^2.4.6",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.24.1",
+    "fake-indexeddb": "^6.2.5",
+    "js-yaml": "^4.1.0",
+    "jsdom": "^24.0.0",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11",
+    "vite-plugin-pwa": "^0.19.8",
+    "vitest": "^1.5.0",
+    "vue-eslint-parser": "^9.4.2",
+    "vue-tsc": "^2.0.13"
+  }
+}

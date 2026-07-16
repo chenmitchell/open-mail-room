@@ -1,0 +1,870 @@
+{
+  "app": {
+    "name": "Open Mail Room",
+    "tagline": "Mailroom Management System"
+  },
+  "nav": {
+    "dashboard": "Inbox",
+    "inbound": "Register Package",
+    "manualRegister": "Manual Registration",
+    "pickup": "Pickup / Verify",
+    "search": "Search",
+    "outbound": "Outbound",
+    "myMail": "My Mail",
+    "notificationSettings": "Notification Settings",
+    "notificationFailures": "Notification Failures",
+    "webhooks": "Webhooks",
+    "auditLogs": "Audit Logs",
+    "reports": "Reports",
+    "admin": "Admin",
+    "employees": "Employee Directory",
+    "users": "User Management",
+    "changePassword": "Change Password",
+    "logout": "Log out",
+    "help": "Help",
+    "roleBadge": {
+      "admin": "Admin",
+      "counter": "Counter",
+      "employee": "Employee",
+      "viewer": "Read-only"
+    },
+    "aiSettings": "AI Settings",
+    "group": {
+      "core": "Mail operations",
+      "query": "Search / Reports",
+      "self": "My services",
+      "admin": "Admin",
+      "help": "Help"
+    },
+    "departments": "Departments"
+  },
+  "common": {
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "required": "Required",
+    "optional": "Optional",
+    "retry": "Retry",
+    "back": "Back",
+    "on": "On",
+    "off": "Off"
+  },
+  "auth": {
+    "loginTitle": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "loginSubmit": "Sign in",
+    "loginError": "Incorrect username or password. Please try again.",
+    "loginGenericError": "Sign-in failed. Please try again later.",
+    "privacyNotice": "This system only collects the personal data needed to process mail (e.g. name, department, contact info) for notification and pickup verification. Data is retained per the configured policy (default 5 years), after which it is anonymized or deleted. Contact your administrator to request access to or deletion of your data."
+  },
+  "setup": {
+    "title": "First-run setup: create administrator",
+    "intro": "No administrator account exists yet. Create the first one below — this page locks itself once it's done.",
+    "email": "Email",
+    "displayName": "Display name",
+    "password": "Password",
+    "passwordHint": "At least {min} characters.",
+    "confirmPassword": "Confirm password",
+    "submit": "Create administrator",
+    "submitError": "Failed to create the administrator. Please try again later.",
+    "successRedirect": "Administrator created. Please sign in.",
+    "errors": {
+      "passwordTooShort": "Password must be at least {min} characters.",
+      "passwordMismatch": "Passwords do not match."
+    }
+  },
+  "status": {
+    "pending": "Pending",
+    "received": "Received",
+    "notified": "Notified",
+    "pickedUp": "Picked up",
+    "reminder": "Reminder",
+    "unclaimed": "Unclaimed",
+    "returned": "Returned",
+    "forwarded": "Forwarded",
+    "destroyed": "Destroyed",
+    "outbound": "Outbound"
+  },
+  "dashboard": {
+    "title": "Inbox",
+    "headerTitle": "Today's Mail",
+    "greeting": "Hello, {name}",
+    "todayPending": "Pending today",
+    "readyForPickup": "Ready for pickup",
+    "resultsCaption": "{total} results",
+    "emptyPending": "No items pending confirmation.",
+    "emptyPickup": "No items ready for pickup.",
+    "actionPhotoRegister": "Take photo",
+    "actionBatchUpload": "Batch upload",
+    "actionPickup": "Pickup / verify",
+    "comingSoonM2": "Coming in the next phase (camera capture + AI recognition). Use manual registration for now.",
+    "statReceivedToday": "Received today",
+    "statAwaitingPickup": "Awaiting pickup",
+    "statPickedUpToday": "Picked up today",
+    "statUnclaimed": "Unclaimed",
+    "statMonthVolume": "This month's volume",
+    "employeeIntro": "View your own mail, manage notification bindings, or read the help guide.",
+    "viewerIntro": "Your account is read-only — you can search mail records and view reports."
+  },
+  "inbound": {
+    "title": "Manual Registration",
+    "mailTypeLabel": "Mail type",
+    "mailTypePlaceholder": "Select a mail type",
+    "mailType": {
+      "letter": "Letter",
+      "document": "Document",
+      "parcel": "Parcel",
+      "box": "Box",
+      "pallet": "Pallet"
+    },
+    "carrierLabel": "Carrier",
+    "carrierPlaceholder": "Select a carrier (optional)",
+    "trackingNoLabel": "Tracking number",
+    "senderNameLabel": "Sender name",
+    "senderOrgLabel": "Sender company",
+    "recipientLabel": "Recipient name",
+    "matchLoading": "Matching employee directory…",
+    "matchCandidates": "Employee match candidates",
+    "matchHighConfidence": "High confidence",
+    "matchMediumConfidence": "Please confirm",
+    "matchLowConfidence": "Low confidence",
+    "matchSelected": "Matched to the employee directory; department will be filled in automatically.",
+    "confidentialLabel": "Confidential",
+    "confidentialHint": "Confidential items are not photographed and the sender is hidden from notifications.",
+    "codLabel": "Cash on delivery",
+    "codAmountLabel": "COD amount",
+    "refrigerationLabel": "Refrigeration",
+    "refrigeration": {
+      "none": "None",
+      "chilled": "Chilled",
+      "frozen": "Frozen"
+    },
+    "sizeNoteLabel": "Size / weight note",
+    "noteLabel": "Note",
+    "submit": "Save and notify",
+    "submitSuccess": "Created record {itemNo}; a notification will be sent automatically.",
+    "errors": {
+      "mailTypeRequired": "Please select a mail type.",
+      "recipientRequired": "Please enter the recipient's name.",
+      "recipientTooLong": "Recipient name is too long (max 200 characters).",
+      "trackingTooLong": "Tracking number is too long (max 200 characters).",
+      "senderNameTooLong": "Sender name is too long (max 200 characters).",
+      "senderOrgTooLong": "Sender company is too long (max 200 characters).",
+      "codAmountRequired": "Cash on delivery is on; please enter an amount.",
+      "codAmountInvalid": "Please enter an amount greater than 0.",
+      "noteTooLong": "Note is too long (max 1000 characters)."
+    },
+    "camera": {
+      "title": "Photo Registration",
+      "openCamera": "Open camera",
+      "fileFallbackHint": "Tap the button below to open the camera and take a photo.",
+      "unavailable": "Live camera preview isn't available; switched to the photo button.",
+      "scanning": "Scanning for a barcode…",
+      "barcodeDetected": "Barcode detected: {value}",
+      "captureNew": "Take photo (new item)",
+      "captureSame": "+ Add to same item",
+      "groupListLabel": "Captured items",
+      "groupLabel": "Item {n}",
+      "photoAlt": "Mail label photo",
+      "previewUnsupported": "This photo format can't be previewed here (e.g. iPhone HEIC); it's captured and will still be recognized after upload.",
+      "retake": "Delete & retake",
+      "submit": "Upload and recognize",
+      "offlineBanner": "You're offline; captures will be queued and sent automatically once reconnected.",
+      "queuedOffline": "Offline — {count} item(s) queued and will sync automatically once reconnected.",
+      "jobsCreated": "Created {count} AI recognition job(s); finish confirming them on the confirm page.",
+      "frontBackHint": "For registered mail or parcels, make sure the barcode / tracking number is in frame (use ‘+ Add another of this item’ to capture the barcode side); plain letters don’t need it. Sender and recipient are on the front — shooting both sides improves AI accuracy."
+    },
+    "batch": {
+      "title": "Batch Upload",
+      "selectFiles": "Select photos (up to 30)",
+      "tooMany": "You can select up to {max} photos at once; please select fewer.",
+      "mergeSelected": "Merge selected into one item ({count})",
+      "selectForMerge": "Select to merge",
+      "remove": "Remove",
+      "status": {
+        "pending": "Pending",
+        "uploading": "Uploading…",
+        "uploaded": "Uploaded",
+        "failed": "Upload failed"
+      },
+      "uploadAll": "Upload all",
+      "retryFailed": "Retry failed",
+      "createJobs": "Create AI recognition jobs",
+      "queuedOffline": "Offline — {count} item(s) queued and will sync automatically once reconnected."
+    },
+    "confirm": {
+      "title": "OCR Confirmation",
+      "step": "Step 2 / 3",
+      "empty": "No recognition results waiting for confirmation.",
+      "queueStatus": "{remaining} item(s) still waiting in the queue",
+      "polling": "AI recognition in progress, please wait…",
+      "timeout": "AI recognition timed out. Retry or fall back to manual registration.",
+      "failed": "AI recognition failed. Use manual registration to finish this item.",
+      "lowConfidenceHint": "AI confidence is low for this field — please double-check it.",
+      "photoLoadError": "Photo failed to load. Please refresh or check your connection.",
+      "confirmButton": "Confirm and create record",
+      "skip": "Skip this item",
+      "submitSuccess": "Created record {itemNo}; a notification will be sent automatically.",
+      "deptSectionLabel": "Or route as a department item → to the department contact:",
+      "deptContact": "→ contact: {name}",
+      "deptNoContact": "(no contact set for this department yet — set one in Department management)",
+      "deptSet": "Set as a department item: {name}; its contact person will be notified to pick it up.",
+      "capturedAt": "Taken {time}"
+    },
+    "trackingNoPlaceholder": "e.g. 1234567890"
+  },
+  "offlineQueue": {
+    "offlineWithCount": "Offline — {count} queued",
+    "syncing": "Syncing queue ({count})"
+  },
+  "pickup": {
+    "title": "Pickup / Verify",
+    "lookupModeLabel": "Lookup method",
+    "lookupByName": "Search by name",
+    "lookupByCode": "Enter pickup code",
+    "selectedEmployee": "Pending items for {name}",
+    "noPendingItems": "This employee has no items ready for pickup.",
+    "pickedUpByLabel": "Picked up by (recipient or delegate name)",
+    "methodLabel": "Verification method",
+    "methodSignature": "Touch signature",
+    "methodCode": "Pickup code",
+    "verifyCodeLabel": "Pickup code",
+    "signatureLabel": "Signature pad",
+    "signatureHint": "Sign inside the box with a finger or stylus. If unable to sign, use pickup-code verification instead.",
+    "signatureClear": "Clear and re-sign",
+    "submit": "Confirm pickup",
+    "resultSuccess": "Picked up successfully",
+    "errors": {
+      "nameNotFound": "No active employee matches that name.",
+      "codeNotFound": "No employee matches that pickup code.",
+      "pickedUpByRequired": "Please enter the name of the person picking up.",
+      "noItemsSelected": "Please select at least one item to pick up.",
+      "signatureRequired": "Please complete the signature first.",
+      "codeRequired": "Please enter the pickup code."
+    }
+  },
+  "search": {
+    "title": "Search",
+    "keywordLabel": "Keyword (tracking no. / name / department)",
+    "statusLabel": "Status",
+    "anyStatus": "Any status",
+    "carrierLabel": "Carrier",
+    "anyCarrier": "Any carrier",
+    "departmentLabel": "Department",
+    "anyDepartment": "Any department",
+    "dateFromLabel": "Date from",
+    "dateToLabel": "Date to",
+    "apply": "Apply filters",
+    "reset": "Reset filters",
+    "empty": "No records match these filters.",
+    "resultsCaption": "{total} results",
+    "colItemNo": "Item no.",
+    "colStatus": "Status",
+    "colRecipient": "Recipient",
+    "colDepartment": "Department",
+    "colCarrier": "Carrier",
+    "colReceivedAt": "Received at",
+    "colActions": "Actions",
+    "viewDetail": "View detail",
+    "detailTitle": "Item detail",
+    "paginationLabel": "Pagination",
+    "prevPage": "Previous",
+    "nextPage": "Next",
+    "pageIndicator": "Page {page} of {totalPages}"
+  },
+  "employees": {
+    "title": "Employee Directory",
+    "addNew": "Add employee",
+    "importCsv": "Import CSV",
+    "importSummary": "Import complete: {total} total, {succeeded} succeeded, {failed} failed.",
+    "importRowError": "Row {row}: {message}",
+    "colName": "Name",
+    "colDepartment": "Department",
+    "colExt": "Ext.",
+    "colStatus": "Status",
+    "colActions": "Actions",
+    "statusActive": "Active",
+    "statusInactive": "Inactive",
+    "edit": "Edit",
+    "addTitle": "Add employee",
+    "editTitle": "Edit employee",
+    "aliasesLabel": "Aliases / English name",
+    "aliasesHint": "Comma-separated; used for OCR name matching.",
+    "extLabel": "Extension",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "errors": {
+      "nameRequired": "Please enter a name."
+    },
+    "downloadTemplate": "Download CSV template",
+    "empty": "No employees yet."
+  },
+  "offline": {
+    "title": "You are offline",
+    "message": "No network connection detected. Some features (like package registration) still work offline and will sync automatically once you're back online.",
+    "retry": "Retry connection"
+  },
+  "myMail": {
+    "title": "My Mail",
+    "pickupCodeLabel": "My pickup code",
+    "pickupCodeHint": "Show this code at the counter to pick up your packages.",
+    "noPickupCode": "No pickup code yet — please contact an administrator.",
+    "pendingTitle": "Ready for pickup",
+    "emptyPending": "No mail waiting for pickup.",
+    "historyTitle": "History",
+    "emptyHistory": "No history yet.",
+    "loadMore": "Load more",
+    "colSender": "Sender",
+    "colPickedUpAt": "Picked up at"
+  },
+  "notificationSettings": {
+    "title": "Notification Settings",
+    "bindingsTitle": "Bound channels",
+    "emptyBindings": "No notification channels bound yet.",
+    "channel": {
+      "line": "LINE",
+      "telegram": "Telegram",
+      "slack": "Slack",
+      "discord": "Discord",
+      "email": "Email",
+      "webhook": "Webhook",
+      "webpush": "Browser push"
+    },
+    "verified": "Verified",
+    "unverified": "Pending",
+    "unbind": "Unbind",
+    "unbindConfirmTitle": "Confirm unbind",
+    "unbindConfirmMessage": "Unbind the \"{channel}\" notification channel? You will stop receiving notifications on this channel.",
+    "wizard": {
+      "lineTitle": "Bind LINE",
+      "telegramTitle": "Bind Telegram",
+      "step1Line": "1. Scan the QR code or search to add the company LINE official account as a friend.",
+      "step2Line": "2. Send the 6-digit code below to the official account in the chat.",
+      "step1Telegram": "1. Tap the button below to open Telegram and start the bot chat.",
+      "step2Telegram": "2. The bot receives the code automatically — no need to type it in.",
+      "openTelegram": "Open Telegram",
+      "codeLabel": "Binding code",
+      "waiting": "Waiting for binding to complete…",
+      "expiresIn": "This code expires in {minutes} minute(s).",
+      "success": "Bound successfully!",
+      "timeout": "Binding timed out. Please generate a new code.",
+      "retry": "Generate a new code",
+      "cancel": "Cancel binding",
+      "error": "Couldn't generate a binding code. Please try again later."
+    },
+    "directForm": {
+      "addressLabel": {
+        "email": "Email address",
+        "slack": "Slack webhook URL",
+        "discord": "Discord webhook URL",
+        "webhook": "Webhook URL"
+      },
+      "submit": "Add binding",
+      "errors": {
+        "addressRequired": "Please enter an address.",
+        "emailInvalid": "Please enter a valid email address.",
+        "urlInvalid": "Please enter a valid URL (must start with https://)."
+      }
+    }
+  },
+  "notificationFailures": {
+    "title": "Notification Failures",
+    "empty": "No failed notifications.",
+    "colItem": "Item no.",
+    "colRecipient": "Recipient",
+    "colChannel": "Channel",
+    "colTemplate": "Template",
+    "colError": "Error",
+    "colRetries": "Retries",
+    "colSentAt": "Last attempt",
+    "colActions": "Actions",
+    "resend": "Resend",
+    "resendSuccess": "Notification resent.",
+    "resendError": "Resend failed.",
+    "template": {
+      "received": "Received",
+      "reminder": "Reminder",
+      "overdue": "Overdue"
+    }
+  },
+  "webhooksAdmin": {
+    "title": "Webhooks",
+    "addNew": "Add webhook",
+    "colName": "Name",
+    "colUrl": "URL",
+    "colEvents": "Events",
+    "colStatus": "Status",
+    "colLastSuccess": "Last success",
+    "colActions": "Actions",
+    "statusActive": "Active",
+    "statusInactive": "Disabled",
+    "failureCount": "{count} consecutive failures",
+    "empty": "No webhooks configured yet.",
+    "nameLabel": "Name",
+    "urlLabel": "URL",
+    "eventsLabel": "Subscribed events",
+    "event": {
+      "item": {
+        "received": "Item received",
+        "notified": "Recipient notified",
+        "reminder": "Reminder sent",
+        "picked_up": "Picked up",
+        "returned": "Returned",
+        "unclaimed": "Unclaimed"
+      },
+      "outbound": {
+        "shipped": "Outbound shipped"
+      }
+    },
+    "save": "Save",
+    "test": "Test",
+    "toggleActivate": "Activate",
+    "toggleDeactivate": "Disable",
+    "secretRevealTitle": "Webhook created",
+    "secretRevealMessage": "Copy the signing secret now — you won't be able to see it again after leaving this page.",
+    "secretLabel": "Signing secret",
+    "testResultTitle": "Test result",
+    "testSuccess": "Test succeeded (HTTP {status})",
+    "testFailure": "Test failed: {message}",
+    "errors": {
+      "nameRequired": "Please enter a name.",
+      "urlRequired": "Please enter a URL.",
+      "urlInvalid": "Please enter a valid URL (must start with https://).",
+      "eventsRequired": "Please select at least one event."
+    }
+  },
+  "usersAdmin": {
+    "title": "User Management",
+    "addNew": "Add user",
+    "searchLabel": "Search (email / display name)",
+    "roleLabel": "Role",
+    "rolePlaceholder": "Select a role",
+    "anyRole": "Any role",
+    "statusLabel": "Status",
+    "anyStatus": "Any status",
+    "apply": "Apply filters",
+    "reset": "Reset filters",
+    "empty": "No users yet.",
+    "resultsCaption": "{total} results",
+    "colEmail": "Email",
+    "colDisplayName": "Display name",
+    "colRole": "Role",
+    "colStatus": "Status",
+    "colLastLogin": "Last login",
+    "colEmployee": "Linked employee",
+    "colActions": "Actions",
+    "statusActive": "Active",
+    "statusInactive": "Disabled",
+    "edit": "Edit",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "resetPasswordAction": "Reset password",
+    "addTitle": "Add user",
+    "editTitle": "Edit user",
+    "emailLabel": "Email",
+    "displayNameLabel": "Display name",
+    "passwordLabel": "Password",
+    "passwordHint": "At least 10 characters.",
+    "activeToggleLabel": "Account active",
+    "employeeIdLabel": "Linked employee ID",
+    "employeeIdHint": "Optional. Enter a directory employee ID to link this account to an employee record (e.g. shows their pickup code).",
+    "deactivateConfirmTitle": "Confirm deactivation",
+    "deactivateConfirmMessage": "Deactivate the account for \"{email}\"? They will no longer be able to sign in.",
+    "resetPassword": {
+      "title": "Reset password",
+      "message": "Set a new password for \"{email}\".",
+      "newPasswordLabel": "New password",
+      "submit": "Reset password",
+      "success": "Password for \"{email}\" has been reset."
+    },
+    "paginationLabel": "Pagination",
+    "prevPage": "Previous",
+    "nextPage": "Next",
+    "pageIndicator": "Page {page} of {totalPages}",
+    "errors": {
+      "emailRequired": "Please enter an email address.",
+      "displayNameRequired": "Please enter a display name.",
+      "roleRequired": "Please select a role.",
+      "passwordRequired": "Please enter a password.",
+      "passwordTooShort": "Password must be at least 10 characters.",
+      "emailExists": "This email address is already in use.",
+      "weakPassword": "Password must be at least 10 characters.",
+      "employeeNotFound": "No matching employee record — please check the employee ID.",
+      "lastAdmin": "You cannot deactivate or demote the last active admin."
+    }
+  },
+  "changePassword": {
+    "title": "Change Password",
+    "currentPasswordLabel": "Current password",
+    "newPasswordLabel": "New password",
+    "passwordHint": "At least 10 characters.",
+    "submit": "Change password",
+    "success": "Password changed successfully.",
+    "errors": {
+      "currentPasswordRequired": "Please enter your current password.",
+      "currentPasswordInvalid": "Current password is incorrect.",
+      "passwordTooShort": "Password must be at least 10 characters."
+    }
+  },
+  "errors": {
+    "network": "Network error. Please check your connection and try again.",
+    "unauthorized": "Your session has expired. Please sign in again.",
+    "generic": "Something went wrong. Please try again later.",
+    "rateLimited": "Too many attempts. Please try again later."
+  },
+  "outbound": {
+    "title": "Outbound",
+    "createTitle": "Create Outbound Item",
+    "listTitle": "Outbound List",
+    "applicantLabel": "Applicant",
+    "applicantHint": "Pre-filled with your name; type a different name to search for someone else.",
+    "applicantMatchLoading": "Matching…",
+    "applicantMatched": "Matched to an employee",
+    "departmentLabel": "Department",
+    "departmentPlaceholder": "Select a department",
+    "toNameLabel": "Recipient name",
+    "toOrgLabel": "Recipient company",
+    "toAddressLabel": "Recipient address",
+    "toPhoneLabel": "Recipient phone",
+    "carrierLabel": "Carrier",
+    "carrierPlaceholder": "Select a carrier",
+    "paymentLabel": "Payment method",
+    "paymentPlaceholder": "Select a payment method",
+    "payment": {
+      "company": "Company account",
+      "dept_code": "Department code",
+      "personal": "Personal"
+    },
+    "costLabel": "Cost",
+    "noteLabel": "Note",
+    "submit": "Create outbound item",
+    "submitSuccess": "Outbound item {itemNo} created",
+    "errors": {
+      "toNameRequired": "Recipient name is required",
+      "toNameTooLong": "Recipient name is too long",
+      "toOrgTooLong": "Recipient company is too long",
+      "toAddressTooLong": "Recipient address is too long",
+      "toPhoneTooLong": "Recipient phone is too long",
+      "noteTooLong": "Note is too long",
+      "costInvalid": "Cost must be a positive number"
+    },
+    "filterStatusLabel": "Status",
+    "anyStatus": "Any status",
+    "filterApply": "Apply filters",
+    "filterReset": "Reset filters",
+    "empty": "No outbound records match these filters.",
+    "resultsCaption": "{total} results",
+    "colItemNo": "Item no.",
+    "colApplicant": "Applicant",
+    "colRecipient": "Recipient",
+    "colDepartment": "Department",
+    "colCarrier": "Carrier",
+    "colStatus": "Status",
+    "colShippedAt": "Shipped at",
+    "colActions": "Actions",
+    "markShipped": "Mark shipped",
+    "status": {
+      "pending": "Pending",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "exception": "Exception"
+    },
+    "shippedDialogTitle": "Mark as shipped",
+    "trackingNoLabel": "Tracking number",
+    "trackingNoHint": "Enter manually, or capture a photo and use OCR to fill it in.",
+    "photoLabel": "Waybill photo",
+    "runOcr": "Recognize tracking no. (OCR)",
+    "ocrRunning": "Recognizing…",
+    "ocrSuccess": "Filled in from OCR",
+    "ocrFailed": "Recognition failed — please enter the tracking number manually.",
+    "confirmShipped": "Confirm shipped",
+    "shippedSuccess": "Marked as shipped",
+    "paginationLabel": "Pagination",
+    "prevPage": "Previous",
+    "nextPage": "Next",
+    "pageIndicator": "Page {page} of {totalPages}",
+    "toNamePlaceholder": "e.g. Jane Doe",
+    "trackingNoPlaceholder": "e.g. 1234567890"
+  },
+  "otherField": {
+    "carrierLabel": "Other carrier name",
+    "mailTypeLabel": "Other mail type name",
+    "paymentLabel": "Other payment method details",
+    "notePrefixCarrier": "Carrier (other)",
+    "notePrefixMailType": "Mail type (other)",
+    "notePrefixPayment": "Payment (other)",
+    "errors": {
+      "carrierRequired": "\"Other\" is selected — please enter the carrier name.",
+      "mailTypeRequired": "\"Other\" is selected — please enter the mail type name.",
+      "paymentRequired": "\"Other\" is selected — please enter the payment method details."
+    }
+  },
+  "reports": {
+    "title": "Reports",
+    "fromLabel": "From date",
+    "toLabel": "To date",
+    "groupByLabel": "Group by",
+    "groupBy": {
+      "department": "Department",
+      "carrier": "Carrier",
+      "day": "Day"
+    },
+    "apply": "Apply",
+    "statReceived": "Total received",
+    "statPickedUp": "Total picked up",
+    "statUnclaimed": "Total unclaimed",
+    "statAvgPickupHours": "Avg. pickup time (hours)",
+    "statOutboundShipped": "Total shipped (outbound)",
+    "chartTitle": "Received count bar chart",
+    "chartAriaLabel": "Bar chart — see the table below for exact values.",
+    "tableTitle": "Detail table",
+    "colReceived": "Received",
+    "colPickedUp": "Picked up",
+    "colUnclaimed": "Unclaimed",
+    "colAvgPickupHours": "Avg. pickup (hrs)",
+    "colOutboundShipped": "Shipped",
+    "empty": "No data in this range.",
+    "exportTitle": "Export",
+    "exportItems": "Export mail items (items.csv)",
+    "exportOutbound": "Export outbound items (outbound.csv)"
+  },
+  "auditLogs": {
+    "title": "Audit Logs",
+    "filterActorLabel": "Actor ID",
+    "filterActionLabel": "Action",
+    "filterTargetTypeLabel": "Target type",
+    "filterTargetIdLabel": "Target ID",
+    "dateFromLabel": "Date from",
+    "dateToLabel": "Date to",
+    "apply": "Apply filters",
+    "reset": "Reset filters",
+    "empty": "No audit log entries match these filters.",
+    "resultsCaption": "{total} results",
+    "colAt": "Time",
+    "colActor": "Actor",
+    "colAction": "Action",
+    "colTarget": "Target",
+    "colIp": "IP",
+    "colActions": "Actions",
+    "viewDiff": "View diff",
+    "diffTitle": "Diff",
+    "diffEmpty": "No diff recorded.",
+    "paginationLabel": "Pagination",
+    "prevPage": "Previous",
+    "nextPage": "Next",
+    "pageIndicator": "Page {page} of {totalPages}"
+  },
+  "aiSettings": {
+    "title": "AI Settings",
+    "statusTitle": "Current Status",
+    "formTitle": "Settings",
+    "keyLabel": "AI API Key",
+    "keyPresent": "Configured",
+    "keyMissing": "Not configured",
+    "keyMissingHint": "Set the API key via the host environment variable AI_API_KEY (or GEMINI_API_KEY). It cannot be entered here for security reasons.",
+    "providerLabel": "Provider",
+    "usageLabel": "Used today",
+    "usageValue": "{used} / {limit} requests",
+    "modelLabel": "Model",
+    "modelHint": "Choose a model to use, or keep auto-detect (recommended).",
+    "autoDetect": "Auto-detect (recommended)",
+    "noKeyWarning": "Please set the environment variable key first",
+    "modelsUnavailable": "Could not fetch the model list. Try again later, or keep auto-detect.",
+    "limitLabel": "Daily request limit",
+    "limitHint": "Prevents abuse; defaults to 10000 requests/day.",
+    "save": "Save",
+    "saveSuccess": "Settings saved.",
+    "errors": {
+      "limitRange": "Enter an integer between 1 and 100000."
+    }
+  },
+  "help": {
+    "hintAriaLabel": "Help",
+    "tocLabel": "On this page",
+    "title": "Help",
+    "intro": {
+      "title": "About this system",
+      "items": [
+        "Open Mail Room helps your organization manage the mailroom: registering incoming mail, AI recognition, notifying recipients, counter pickup verification, outbound shipping, and reporting.",
+        "The system shows different features depending on your role (admin/counter/employee/read-only) — you'll only see what's relevant to your job."
+      ]
+    },
+    "loginLogout": {
+      "title": "Signing in / out",
+      "items": [
+        "Enter your email and password on the sign-in page and click \"Sign in\".",
+        "Once signed in, use the \"Log out\" button at the bottom of the left navigation (bottom bar on mobile) to end your session — always log out on a shared device."
+      ]
+    },
+    "myMailCommon": {
+      "title": "Viewing your own mail",
+      "items": [
+        "Click \"My Mail\" in the navigation to see items waiting for you and your pickup history.",
+        "If your account is linked to a directory employee record, your personal pickup code is shown at the top of the page."
+      ]
+    },
+    "employee": {
+      "title": "Employees",
+      "myMail": {
+        "title": "My Mail",
+        "items": [
+          "\"My Mail\" lists packages currently ready for pickup, as well as your past pickup history.",
+          "Click an item to see details such as sender and received time."
+        ]
+      },
+      "notifications": {
+        "title": "Notification bindings (LINE/Email…)",
+        "items": [
+          "On \"Notification Settings\" you can bind LINE, Telegram, Email and other channels to get notified when mail arrives or a reminder is due.",
+          "LINE/Telegram use a binding-code flow: scan the QR code or add the bot, then send the 6-digit code shown on screen to complete the binding.",
+          "Other channels like Email can be added directly by entering an address; the status shows \"Pending\" or \"Verified\".",
+          "Click \"Unbind\" any time to remove a channel you no longer need."
+        ]
+      },
+      "pickupCode": {
+        "title": "Using your pickup code",
+        "items": [
+          "Your pickup code is your personal proof of pickup, shown at the top of \"My Mail\".",
+          "Show or tell the counter staff this code to verify pickup quickly, without needing a signature.",
+          "Treat your pickup code as private — only share it if you're authorizing someone else to pick up on your behalf."
+        ]
+      }
+    },
+    "counter": {
+      "title": "Counter staff",
+      "inboundRegister": {
+        "title": "Registering mail (manual / photo / batch)",
+        "items": [
+          "Manual registration: fill in the mail type, recipient, etc. on \"Manual Registration\" and submit — the system matches the employee directory and sends a notification automatically.",
+          "Photo registration: use the camera on \"Register Package\" to capture the mail label; the system scans for a barcode and sends it for AI recognition. You can capture multiple items in a row, or add more photos to the same item.",
+          "Batch upload: select up to 30 photos at once, merge selected photos into one item if needed, then create AI recognition jobs for all of them.",
+          "All three flows finish on the \"OCR Confirmation\" page. If you go offline, captures/uploads are queued and sync automatically once you're back online."
+        ]
+      },
+      "ocrConfirm": {
+        "title": "OCR confirmation",
+        "items": [
+          "After AI recognition finishes, \"OCR Confirmation\" shows one item at a time with the photo on one side and editable fields on the other.",
+          "Low-confidence fields are flagged — double check them before confirming. Every field can be edited manually.",
+          "Confirming creates the official record and sends the notification automatically; you can also \"Skip this item\" to handle it later."
+        ]
+      },
+      "pickup": {
+        "title": "Pickup / verification",
+        "items": [
+          "Find the employee and their pending items by \"Search by name\" or \"Enter pickup code\".",
+          "Select the items being picked up, then enter the name of the actual recipient (or delegate).",
+          "Verify with either a \"Touch signature\" or the \"Pickup code\" method — if signing isn't possible, use the pickup code instead.",
+          "After submitting, the result of each item's verification is shown immediately."
+        ]
+      },
+      "outbound": {
+        "title": "Outbound shipping",
+        "items": [
+          "Create an outbound item on \"Outbound\": enter the applicant (auto-matched against the directory), recipient details, carrier, and payment method, then submit.",
+          "Once the package actually ships, click \"Mark shipped\" on the list — enter the tracking number manually, or take a photo and use OCR to fill it in automatically.",
+          "Filter the outbound list by status (pending/shipped/delivered/exception)."
+        ]
+      },
+      "search": {
+        "title": "Search",
+        "items": [
+          "\"Search\" lets you filter received mail by keyword (tracking no. / name / department), status, carrier, department, and date range.",
+          "Click \"View detail\" to expand the full information for a single item."
+        ]
+      }
+    },
+    "admin": {
+      "title": "Administrators",
+      "employees": {
+        "title": "Employee directory & CSV import",
+        "items": [
+          "On \"Employee Directory\" you can add/edit employee records (name, aliases, department, extension, email, phone, active status).",
+          "\"Aliases\" can hold an employee's English name or common nicknames, improving OCR/manual name-matching accuracy.",
+          "Click \"Download CSV template\" for the expected column format, then use \"Import CSV\" to bulk create/update employees — the import result shows a success/failure count and a per-row error reason."
+        ]
+      },
+      "aiSettings": {
+        "title": "AI Settings",
+        "items": [
+          "The AI Settings page shows whether an AI API key is configured, the provider, and today's used/limit request count. The API key must be set via a host environment variable (AI_API_KEY or GEMINI_API_KEY) and cannot be entered on this page for security reasons.",
+          "Choose a model from the dropdown, or keep \"Auto-detect (recommended)\". The list is fetched live from the configured provider; the dropdown is disabled if no key is configured yet.",
+          "The \"daily request limit\" prevents abuse (default 10000/day) and can be adjusted (1-100000)."
+        ]
+      },
+      "webhooks": {
+        "title": "Notification webhooks",
+        "items": [
+          "On \"Webhooks\" you can add endpoints for external systems and choose which events to subscribe to (e.g. received, picked up, outbound shipped).",
+          "A signing secret (for verifying the source) is shown once at creation — copy and store it immediately, as it can't be viewed again after leaving the page.",
+          "Use \"Test\" to confirm an endpoint responds correctly; consecutive failures are shown as a count, and an endpoint can be disabled if needed.",
+          "\"Notification Failures\" lets you view failed notification deliveries and resend them manually."
+        ]
+      },
+      "auditLogs": {
+        "title": "Audit logs",
+        "items": [
+          "\"Audit Logs\" records who created/modified/deleted/viewed which record and when — including views of confidential items.",
+          "Filter by actor, action, target type/ID, and date range, and view the detailed diff for any entry."
+        ]
+      },
+      "retention": {
+        "title": "Data retention",
+        "items": [
+          "Personal data (name, department, contact info) is retained per the configured privacy policy — 5 years by default — and is anonymized or deleted after that.",
+          "To adjust the retention period or help a user exercise their access/deletion rights, use the admin settings or contact your technical owner."
+        ]
+      }
+    },
+    "viewer": {
+      "title": "Read-only access",
+      "items": [
+        "Your account has the \"Read-only\" role: you can use \"Search\" and \"Reports\" to view mail and outbound records, but cannot create, edit, or verify any record.",
+        "Contact the counter staff or an administrator if a record needs to change."
+      ]
+    },
+    "hint": {
+      "dashboard": "This is the mailroom home page — jump to photo registration, batch upload, or pickup, and see today's stats and the pickup-ready list.",
+      "myMail": "See packages waiting for you and your pickup history, plus your personal pickup code.",
+      "inboundRegister": "Manually enter mail details to create a record — handy when there's no camera or for quick single-item entry.",
+      "photoRegister": "Use the camera to capture the mail label; the system scans for a barcode and sends it for AI recognition.",
+      "batchUpload": "Select multiple photos at once, optionally merge them into one item, then create AI recognition jobs in batch.",
+      "ocrConfirm": "Review the AI recognition result — low-confidence fields are flagged — then confirm to create the official record.",
+      "pickup": "Look up pending items by name or pickup code, then verify pickup with a signature or the pickup code.",
+      "outbound": "Create outbound items, capture a waybill photo to OCR the tracking number, and track shipping status.",
+      "reports": "View received/outbound stats by date range and department/carrier/day grouping, and export detail CSVs.",
+      "search": "Filter mail records by tracking number, name, department, status, and more, and view full details.",
+      "employees": "Manage the employee directory — add/edit employees, or bulk import via CSV.",
+      "auditLogs": "View the system's audit trail — who created/modified/deleted/viewed which record and when.",
+      "employeesCsvTemplate": "CSV columns: name, aliases (semicolon-separated), department_code, ext, email, phone. Download the template, fill it in, then import.",
+      "inboundCarrier": "Carrier is optional and used for search/reporting later — leave it blank if none match.",
+      "inboundTrackingNo": "Enter the number from the mail/waybill; leave blank if there isn't one — the system still assigns an internal item number.",
+      "inboundRecipientMatch": "The recipient name is auto-matched against the employee directory: score ≥90 auto-fills, 70–90 lists candidates to confirm, <70 requires manual entry.",
+      "outboundCarrier": "Choose the carrier actually used for this shipment — shown on the outbound list and in reports.",
+      "outboundPayment": "Choose how this shipment is paid for: company account, department code, or personal.",
+      "outboundApplicantMatch": "The applicant name is auto-matched against the employee directory using the same rule as mail registration (≥90 auto-fill, 70–90 candidates).",
+      "outboundTrackingNo": "Enter the tracking number manually, or take a photo and click \"Recognize tracking no. (OCR)\" to fill it in.",
+      "aiSettings": "Configure the AI recognition provider's model choice and daily request limit.",
+      "usersAdmin": "Manage system user accounts, role permissions, and active status.",
+      "notificationSettings": "Configure which channels (LINE/Telegram/Email, etc.) receive your pickup notifications.",
+      "notificationFailures": "Review notifications that failed to send, and retry them."
+    }
+  },
+  "departments": {
+    "title": "Department Management",
+    "help": "Set each department's contact person; mail addressed to a company/department with no specific person notifies that contact to pick it up.",
+    "intro": "Assign a contact person to each department (usually a manager or designated recipient). Department mail notifies this contact.",
+    "name": "Department name",
+    "code": "Code",
+    "contact": "Contact person",
+    "noContact": "(none)",
+    "unknownContact": "(contact inactive or missing)",
+    "addButton": "Add department",
+    "created": "Department added.",
+    "contactSaved": "Updated the contact for “{name}”.",
+    "empty": "No departments yet. Add one above, or they're created when you import employees."
+  }
+}

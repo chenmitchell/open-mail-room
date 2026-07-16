@@ -1,0 +1,104 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    # No public port mapping: the backend is reached only via the `caddy`
+    # service on the shared `openmailroom` network, which terminates TLS and
+    # adds HSTS/security headers (M0-R1 blocking #3 -- publishing 8000:8000
+    # let clients bypass Caddy entirely and hit the API over plain HTTP).
+    # Uncomment the next two lines ONLY for local debugging on a trusted
+    # machine, and prefer binding to 127.0.0.1 rather than all interfaces.
+    # ports:
+    #   - "127.0.0.1:8000:8000"
+    environment:
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///./data/openmailroom.db}
+      - SECRET_KEY=${SECRET_KEY}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
+      - ENCRYPTION_KEYS=${ENCRYPTION_KEYS:-}
+      - ENCRYPTION_ACTIVE_KEY=${ENCRYPTION_ACTIVE_KEY:-}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      # ZEABUR-1: scripts/entrypoint.sh now defaults uvicorn's --port to
+      # 8080 (Zeabur convention) when $PORT is unset, so this self-hosted
+      # path pins it back to 8000 explicitly -- this Caddyfile's
+      # `reverse_proxy backend:8000` and this same service's own
+      # HEALTHCHECK (baked into backend/Dockerfile as a literal
+      # `curl http://localhost:8000/healthz`) both hardcode 8000 and are
+      # NOT read from this env block, so the actual listen port must match
+      # them exactly.
+      - PORT=${PORT:-8000}
+    volumes:
+      - data:/app/data
+      - config:/app/config:ro
+    networks:
+      - openmailroom
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=openmailroom
+      - POSTGRES_USER=openmailroom
+      # No default: a blank/"changeme" default password on a DB is exactly
+      # the kind of thing M0-R1's suggestions flagged. deploy.sh always
+      # generates a random POSTGRES_PASSWORD; this errors out loudly instead
+      # of silently starting with a guessable password if invoked by hand.
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set (see deploy.sh / .env.example)}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - openmailroom
+    profiles:
+      - postgres
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - DOMAIN=${DOMAIN:-localhost}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+      - ../frontend/dist:/srv/frontend:ro
+    networks:
+      - openmailroom
+    depends_on:
+      - backend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-k", "https://localhost/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  data:
+  config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ../config
+  caddy_data:
+  caddy_config:
+  postgres_data:
+
+networks:
+  openmailroom:
+    driver: bridge

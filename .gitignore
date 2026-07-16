@@ -1,0 +1,54 @@
+# --- Secrets: never commit these -------------------------------------
+# .env holds SECRET_KEY / ENCRYPTION_KEY / provider API keys. Losing
+# ENCRYPTION_KEY makes every encrypted photo and personal field
+# permanently unreadable; leaking it makes them readable by anyone.
+.env
+.env.*
+!.env.example
+secrets.env
+*.pem
+*.key
+!deploy/**/*.key.example
+
+# --- Runtime data: uploaded photos, signatures, the database ----------
+# These are real people's mail. They belong on the server's volume, not
+# in version control.
+data/
+backend/data/
+uploads/
+backend/uploads/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# --- Python ----------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# --- Node / frontend -------------------------------------------------
+node_modules*/
+dist/
+dev-dist/
+*.tsbuildinfo
+.vite/
+
+# --- Lockfiles (see docs: image builds resolve from package.json) -----
+frontend/pnpm-lock.yaml
+frontend/package-lock.json
+
+# --- Logs / OS / editor ----------------------------------------------
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
