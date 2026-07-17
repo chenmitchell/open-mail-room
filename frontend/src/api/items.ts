@@ -23,6 +23,17 @@ export function returnItem(id: string): Promise<MailItem> {
   return apiClient.post<MailItem>(`/items/${id}/return`)
 }
 
+/**
+ * 作廢一筆登記錯的件(重複登記、拍錯照、按錯送出)。
+ *
+ * `reason` 是後端必填的:作廢是唯一一個「這筆紀錄是個錯誤」的轉換,
+ * 沒有理由的話稽核只會記到「有人把某筆抹掉了」而不知道為什麼 —— 那比
+ * 沒有這個功能更糟。已領取的件不能作廢(那個簽名記錄的是真的發生過的事)。
+ */
+export function voidItem(id: string, reason: string): Promise<MailItem> {
+  return apiClient.post<MailItem>(`/items/${id}/void`, { reason })
+}
+
 export function forwardItem(id: string): Promise<MailItem> {
   return apiClient.post<MailItem>(`/items/${id}/forward`)
 }

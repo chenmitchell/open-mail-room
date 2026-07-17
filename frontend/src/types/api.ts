@@ -60,6 +60,10 @@ export type MailItemStatus =
   | 'forwarded'
   | 'unclaimed'
   | 'destroyed'
+  // 登記錯了(重複登記、拍錯照、按錯送出)。與 returned 不同 —— 退回是
+  // 真的有東西被送回寄件人,作廢是那件包裹從來不存在,所以報表不算它。
+  // 紀錄本身保留(稽核軌跡不能有洞),但排除在統計與所有領取路徑之外。
+  | 'voided'
 
 // 02 mail_items.mail_type
 export type MailType = 'letter' | 'document' | 'parcel' | 'box' | 'pallet'

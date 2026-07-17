@@ -7,12 +7,13 @@ import AppButton from '@/components/AppButton.vue'
 import AppBadge from '@/components/AppBadge.vue'
 import AppDialog from '@/components/AppDialog.vue'
 import HelpHint from '@/components/HelpHint.vue'
-import { listItems } from '@/api/items'
+import { listItems, voidItem } from '@/api/items'
 import { listCarriers } from '@/api/carriers'
 import { listDepartments } from '@/api/departments'
 import { ApiError } from '@/api/client'
 import { formatDateTime } from '@/utils/format'
 import { mailStatusBadgeVariant, mailStatusLabelKey } from '@/utils/mailStatus'
+import { useAuthStore } from '@/stores/auth'
 import type { Carrier, Department, ItemsQuery, MailItem, MailItemStatus } from '@/types/api'
 
 const { t } = useI18n({ useScope: 'global' })
@@ -53,6 +54,42 @@ const departmentOptions = computed(() => departments.value.map((d) => ({ value: 
 const totalPages = computed(() => Math.max(1, Math.ceil(total.value / size)))
 
 const selectedItem = ref<MailItem | null>(null)
+
+const auth = useAuthStore()
+// 作廢是更正登記錯誤,不是收發作業 —— 只有能登記的人能撤銷自己的登記。
+const canVoid = computed(() => auth.role === 'admin' || auth.role === 'counter')
+// 只有還沒被領走的件能作廢。已領取的那個簽名記錄的是真的發生過的事。
+const VOIDABLE: MailItemStatus[] = ['received', 'notified', 'unclaimed']
+const voidDialogOpen = ref(false)
+const voidReason = ref('')
+const voidSubmitting = ref(false)
+const voidError = ref<string | null>(null)
+
+const canVoidSelected = computed(
+  () => !!selectedItem.value && canVoid.value && VOIDABLE.includes(selectedItem.value.status),
+)
+
+function openVoidDialog() {
+  voidReason.value = ''
+  voidError.value = null
+  voidDialogOpen.value = true
+}
+
+async function onConfirmVoid() {
+  if (!selectedItem.value || !voidReason.value.trim()) return
+  voidSubmitting.value = true
+  voidError.value = null
+  try {
+    const updated = await voidItem(selectedItem.value.id, voidReason.value.trim())
+    selectedItem.value = updated
+    voidDialogOpen.value = false
+    await runSearch()
+  } catch (err) {
+    voidError.value = err instanceof ApiError ? err.message : t('errors.generic')
+  } finally {
+    voidSubmitting.value = false
+  }
+}
 
 function buildQuery(): ItemsQuery {
   return {
@@ -347,6 +384,58 @@ onMounted(async () => {
           {{ selectedItem.note }}
         </dd>
       </dl>
+      <div
+        v-if="canVoidSelected"
+        class="search-page__detail-actions"
+      >
+        <p class="search-page__void-hint">
+          {{ t('search.voidHint') }}
+        </p>
+        <AppButton
+          variant="danger"
+          @click="openVoidDialog"
+        >
+          {{ t('search.void') }}
+        </AppButton>
+      </div>
+    </AppDialog>
+
+    <AppDialog
+      :open="voidDialogOpen"
+      :title="t('search.voidDialogTitle')"
+      @close="voidDialogOpen = false"
+    >
+      <p class="search-page__void-warning">
+        {{ t('search.voidWarning', { itemNo: selectedItem?.item_no ?? '' }) }}
+      </p>
+      <AppInput
+        v-model="voidReason"
+        :label="t('search.voidReasonLabel')"
+        :placeholder="t('search.voidReasonPlaceholder')"
+        required
+      />
+      <p
+        v-if="voidError"
+        class="search-page__void-error"
+        role="alert"
+      >
+        {{ voidError }}
+      </p>
+      <div class="search-page__void-buttons">
+        <AppButton
+          variant="secondary"
+          @click="voidDialogOpen = false"
+        >
+          {{ t('common.cancel') }}
+        </AppButton>
+        <AppButton
+          variant="danger"
+          :disabled="!voidReason.trim() || voidSubmitting"
+          @click="onConfirmVoid"
+        >
+          {{ voidSubmitting ? t('common.loading') : t('search.voidConfirm') }}
+        </AppButton>
+      </div>
     </AppDialog>
   </section>
 </template>
@@ -418,6 +507,37 @@ onMounted(async () => {
   text-align: left;
   padding: var(--space-2) var(--space-3);
   border-bottom: 1px solid var(--color-border);
+}
+
+.search-page__detail-actions {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.search-page__void-hint {
+  margin: 0 0 var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.search-page__void-warning {
+  margin: 0 0 var(--space-3);
+  color: var(--color-text);
+}
+
+.search-page__void-error {
+  margin: var(--space-2) 0 0;
+  color: var(--color-danger-text);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.search-page__void-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
 }
 
 .search-page__detail-btn {

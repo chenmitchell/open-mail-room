@@ -86,7 +86,8 @@
     "returned": "已退回",
     "forwarded": "已轉寄",
     "destroyed": "已銷毀",
-    "outbound": "交寄"
+    "outbound": "交寄",
+    "voided": "已作廢"
   },
   "dashboard": {
     "title": "收件台",
@@ -273,7 +274,14 @@
     "paginationLabel": "分頁",
     "prevPage": "上一頁",
     "nextPage": "下一頁",
-    "pageIndicator": "第 {page} / {totalPages} 頁"
+    "pageIndicator": "第 {page} / {totalPages} 頁",
+    "void": "作廢這筆登記",
+    "voidHint": "登記錯了(重複登記、拍錯照、按錯送出)可以作廢。紀錄會保留並記下理由,但不列入報表統計。",
+    "voidDialogTitle": "作廢登記",
+    "voidWarning": "確定要作廢 {itemNo}?這筆會從待領清單與報表統計中排除,但紀錄與稽核軌跡會保留。已領取的件無法作廢。",
+    "voidReasonLabel": "作廢理由",
+    "voidReasonPlaceholder": "例如:與 IN-20260716-0012 重複登記",
+    "voidConfirm": "確定作廢"
   },
   "employees": {
     "title": "員工名錄管理",

@@ -200,6 +200,16 @@ class ReturnRequest(BaseModel):
     note: str | None = None
 
 
+class VoidRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    # Required, and deliberately so. A void is the one transition that says
+    # "this record was a mistake"; without a reason the audit trail records
+    # that a counter erased something and nothing about why, which is worse
+    # than not having the feature. Costs the counter four characters.
+    reason: str = Field(min_length=1, max_length=500)
+
+
 class ForwardRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -440,7 +450,12 @@ async def create_item(
     launch_delivery_for_many([n.id for n in created_notifications])
     await launch_publish_event(session, event=EVENT_ITEM_RECEIVED, mail_item_id=item.id)
 
-    return ok(serialize_mail_item(item))
+    carrier_name, department_name = await _item_names(session, item)
+    return ok(
+        serialize_mail_item(
+            item, carrier_name=carrier_name, department_name=department_name
+        )
+    )
 
 
 @router.get("")
@@ -585,7 +600,12 @@ async def update_item(
     )
     await session.commit()
     await session.refresh(item)
-    return ok(serialize_mail_item(item))
+    carrier_name, department_name = await _item_names(session, item)
+    return ok(
+        serialize_mail_item(
+            item, carrier_name=carrier_name, department_name=department_name
+        )
+    )
 
 
 @router.post("/{item_id}/pickup")
@@ -713,7 +733,73 @@ async def pickup_item(
     await session.commit()
     await session.refresh(item)
     await launch_publish_event(session, event=EVENT_ITEM_PICKED_UP, mail_item_id=item.id)
-    return ok(serialize_mail_item(item))
+    carrier_name, department_name = await _item_names(session, item)
+    return ok(
+        serialize_mail_item(
+            item, carrier_name=carrier_name, department_name=department_name
+        )
+    )
+
+
+@router.post("/{item_id}/void")
+async def void_item(
+    item_id: str,
+    payload: VoidRequest,
+    request: Request,
+    session: AsyncSession = Depends(get_session),
+    user: User = Depends(require_role(*WRITE_ROLES)),
+):
+    """Mark a registration as a mistake (雙重登記、拍錯照、按錯送出).
+
+    Why this exists as its own status rather than a delete: the counter *will*
+    mis-register things -- it's a person with a phone at a busy desk -- and
+    until now the only escape was to fake a `returned`, which told the reports
+    a parcel went back to its sender when no parcel ever existed. So the counts
+    lied, and the audit trail recorded a return that never happened.
+
+    Why not a hard delete: `audit_logs` is append-only on purpose. An item that
+    can vanish takes its own history with it, and "who deleted this and why" is
+    exactly the question an audit exists to answer. The row stays, carries its
+    reason, and is excluded from reports and every pickup path instead.
+
+    Only reachable from ACTIVE_SOURCE_STATUSES (via `_assert_transition_allowed`),
+    so a picked-up item can't be voided -- that signature records something that
+    really happened, and unpicking it is not a mistake-correction, it's erasing
+    evidence.
+    """
+    item = await _get_or_404(session, item_id)
+    _assert_transition_allowed(item)
+
+    before = serialize_mail_item(item)
+    void_note = f"[voided] {payload.reason}"
+    new_note = f"{item.note}\n{void_note}" if item.note else void_note
+
+    won = await _conditional_transition(
+        session, item, values={"status": MailStatus.voided, "note": new_note}
+    )
+    if not won:
+        await session.refresh(item)
+        _assert_transition_allowed(item)
+
+    await session.refresh(item)
+    after = serialize_mail_item(item)
+    await record_audit(
+        session,
+        request=request,
+        actor=user,
+        action="mail_item.void",
+        target_type="mail_item",
+        target_id=item.id,
+        diff={"before": before, "after": after, "reason": payload.reason},
+    )
+    await session.commit()
+    await session.refresh(item)
+    carrier_name, department_name = await _item_names(session, item)
+    return ok(
+        serialize_mail_item(
+            item, carrier_name=carrier_name, department_name=department_name
+        )
+    )
 
 
 @router.post("/{item_id}/return")
@@ -756,7 +842,12 @@ async def return_item(
     await session.commit()
     await session.refresh(item)
     await launch_publish_event(session, event=EVENT_ITEM_RETURNED, mail_item_id=item.id)
-    return ok(serialize_mail_item(item))
+    carrier_name, department_name = await _item_names(session, item)
+    return ok(
+        serialize_mail_item(
+            item, carrier_name=carrier_name, department_name=department_name
+        )
+    )
 
 
 @router.post("/{item_id}/forward")
@@ -798,4 +889,9 @@ async def forward_item(
     )
     await session.commit()
     await session.refresh(item)
-    return ok(serialize_mail_item(item))
+    carrier_name, department_name = await _item_names(session, item)
+    return ok(
+        serialize_mail_item(
+            item, carrier_name=carrier_name, department_name=department_name
+        )
+    )

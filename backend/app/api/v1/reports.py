@@ -121,6 +121,12 @@ async def report_summary(
         MailItem.received_at,
         MailItem.picked_up_at,
         MailItem.status,
+    ).where(
+        # A voided item is a registration mistake, not a piece of mail. Counting
+        # it would inflate 收件量 and drag 平均領取時間 with a parcel that never
+        # existed -- and the whole point of voiding is that the numbers stop
+        # lying. The row itself stays for the audit trail.
+        MailItem.status != MailStatus.voided
     )
     if from_:
         mail_stmt = mail_stmt.where(MailItem.received_at >= from_)

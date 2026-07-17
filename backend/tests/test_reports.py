@@ -186,3 +186,36 @@ async def test_reports_avg_pickup_hours_and_unclaimed(client, db_session):
         assert "avg_pickup_seconds" not in row
         if row["picked_up_count"]:
             assert row["avg_pickup_hours"] is not None
+
+
+async def test_reports_exclude_voided_items(client, db_session):
+    """A voided item is a registration mistake, not a piece of mail.
+
+    This is the whole point of having the status: before it existed, the only
+    way to retract a mis-registration was to fake a `returned`, which left the
+    counts describing parcels that never arrived. If a void still counted, the
+    feature would be cosmetic.
+    """
+    await login_as(client, db_session, role=UserRole.admin)
+    day = datetime(2026, 7, 16, 3, 0, tzinfo=timezone.utc)
+
+    await _make_mail_item(db_session, received_at=day, seq=1)
+    await _make_mail_item(
+        db_session, received_at=day, picked_up_at=day + timedelta(hours=2), seq=2,
+        status=MailStatus.picked_up,
+    )
+    # Two mistakes that must leave no trace in the numbers.
+    await _make_mail_item(db_session, received_at=day, seq=3, status=MailStatus.voided)
+    await _make_mail_item(
+        db_session, received_at=day, picked_up_at=day + timedelta(hours=99), seq=4,
+        status=MailStatus.voided,
+    )
+
+    resp = await client.get("/api/v1/reports/summary?group_by=day")
+    assert resp.status_code == 200
+    totals = resp.json()["data"]["totals"]
+
+    assert totals["received_count"] == 2, "voided items must not inflate 收件量"
+    assert totals["picked_up_count"] == 1
+    # The 99-hour voided row would wreck this average if it counted.
+    assert totals["avg_pickup_hours"] == 2

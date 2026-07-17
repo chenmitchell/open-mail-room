@@ -18,6 +18,7 @@ const STATUS_TO_BADGE: Record<MailItemStatus, BadgeStatus> = {
   returned: 'neutral',
   forwarded: 'neutral',
   destroyed: 'neutral',
+  voided: 'neutral',
 }
 
 const STATUS_TO_LABEL_KEY: Record<MailItemStatus, string> = {
@@ -28,6 +29,7 @@ const STATUS_TO_LABEL_KEY: Record<MailItemStatus, string> = {
   returned: 'status.returned',
   forwarded: 'status.forwarded',
   destroyed: 'status.destroyed',
+  voided: 'status.voided',
 }
 
 export function mailStatusBadgeVariant(status: MailItemStatus): BadgeStatus {

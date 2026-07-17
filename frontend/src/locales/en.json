@@ -86,7 +86,8 @@
     "returned": "Returned",
     "forwarded": "Forwarded",
     "destroyed": "Destroyed",
-    "outbound": "Outbound"
+    "outbound": "Outbound",
+    "voided": "Voided"
   },
   "dashboard": {
     "title": "Inbox",
@@ -273,7 +274,14 @@
     "paginationLabel": "Pagination",
     "prevPage": "Previous",
     "nextPage": "Next",
-    "pageIndicator": "Page {page} of {totalPages}"
+    "pageIndicator": "Page {page} of {totalPages}",
+    "void": "Void this registration",
+    "voidHint": "Void a mis-registration (double-registered, wrong photo, submitted by mistake). The record is kept with its reason but excluded from reports.",
+    "voidDialogTitle": "Void registration",
+    "voidWarning": "Void {itemNo}? It will be excluded from the pickup queue and from report totals, but the record and its audit trail are kept. Collected items cannot be voided.",
+    "voidReasonLabel": "Reason",
+    "voidReasonPlaceholder": "e.g. duplicate of IN-20260716-0012",
+    "voidConfirm": "Void it"
   },
   "employees": {
     "title": "Employee Directory",

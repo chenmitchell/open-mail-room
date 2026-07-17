@@ -11,6 +11,23 @@ from tests._helpers import create_user, login, login_as
 ITEM_NO_RE = re.compile(r"^IN-\d{8}-\d{4}$")
 
 
+def _make_png_b64() -> str:
+    """A real 1x1 PNG. The pickup endpoint magic-byte-validates the signature
+    (07-SECURITY.md section 4 -- it is an uploaded image like any other), so a
+    placeholder string won't do."""
+    import base64
+    import io
+
+    from PIL import Image
+
+    buf = io.BytesIO()
+    Image.new("RGBA", (1, 1), (0, 0, 0, 255)).save(buf, format="PNG")
+    return base64.b64encode(buf.getvalue()).decode("ascii")
+
+
+_VALID_PNG_B64 = _make_png_b64()
+
+
 async def _make_department(db_session, code="eng") -> Department:
     dept = Department(name="Engineering", code=code)
     db_session.add(dept)
@@ -456,3 +473,161 @@ async def test_create_confidential_item_with_attachments(client, db_session):
     await login(client, email="viewer-confidential@example.com")
     get_resp = await client.get(f"/api/v1/uploads/{attachment.id}")
     assert get_resp.status_code == 403
+
+
+async def test_write_responses_carry_display_names_like_reads(client, db_session):
+    """Every response that returns an item must carry the same shape.
+
+    GET already resolved carrier_name/department_name, but POST/PATCH/pickup
+    returned them as null even when the ids were set -- so a client that
+    trusted the response it just got back would render 「—」 while a refresh
+    showed the real name. A field that is sometimes-null-for-no-reason is worse
+    than an absent one: it teaches callers to distrust the contract.
+    """
+    from app.models.carrier import Carrier
+    from app.models.enums import CarrierKind
+
+    dept = await _make_department(db_session, code="ops")
+    carrier = Carrier(name="黑貓宅急便", slug="tcat-w", kind=CarrierKind.courier)
+    db_session.add(carrier)
+    await db_session.commit()
+    await db_session.refresh(carrier)
+
+    await login_as(client, db_session, role=UserRole.counter)
+
+    created = await client.post(
+        "/api/v1/items",
+        json={
+            "mail_type": "parcel",
+            "recipient_name_raw": "王小明",
+            "carrier_id": carrier.id,
+            "department_id": dept.id,
+        },
+    )
+    assert created.status_code == 201
+    body = created.json()["data"]
+    assert body["carrier_name"] == "黑貓宅急便"
+    assert body["department_name"] == "Engineering"
+
+    patched = await client.patch(f"/api/v1/items/{body['id']}", json={"note": "x"})
+    assert patched.status_code == 200
+    assert patched.json()["data"]["carrier_name"] == "黑貓宅急便"
+
+    picked = await client.post(
+        f"/api/v1/items/{body['id']}/pickup",
+        json={
+            "method": "signature",
+            "picked_up_by_name": "王小明",
+            "signature_png_base64": _VALID_PNG_B64,
+        },
+    )
+    assert picked.status_code == 200, picked.text
+    assert picked.json()["data"]["carrier_name"] == "黑貓宅急便"
+
+
+# --- void: 作廢一筆登記錯的件 -------------------------------------------
+
+
+async def _create_item(client, **extra):
+    payload = {"mail_type": "letter", "recipient_name_raw": "王小明"}
+    payload.update(extra)
+    resp = await client.post("/api/v1/items", json=payload)
+    assert resp.status_code == 201
+    return resp.json()["data"]
+
+
+async def test_void_requires_a_reason(client, db_session):
+    """A void says "this record was a mistake". Without a reason the trail
+    records that a counter erased something and nothing about why -- which is
+    worse than not having the feature at all."""
+    await login_as(client, db_session, role=UserRole.counter)
+    item = await _create_item(client)
+
+    assert (await client.post(f"/api/v1/items/{item['id']}/void", json={})).status_code == 422
+    assert (
+        await client.post(f"/api/v1/items/{item['id']}/void", json={"reason": ""})
+    ).status_code == 422
+
+
+async def test_void_records_reason_and_leaves_the_row(client, db_session):
+    await login_as(client, db_session, role=UserRole.counter)
+    item = await _create_item(client)
+
+    resp = await client.post(
+        f"/api/v1/items/{item['id']}/void", json={"reason": "重複登記"}
+    )
+    assert resp.status_code == 200
+    body = resp.json()["data"]
+    assert body["status"] == "voided"
+    assert "[voided] 重複登記" in body["note"]
+
+    # The row is still there -- voiding is not deleting.
+    detail = await client.get(f"/api/v1/items/{item['id']}")
+    assert detail.status_code == 200
+    assert detail.json()["data"]["status"] == "voided"
+
+
+async def test_voided_item_cannot_be_picked_up(client, db_session):
+    """A parcel that never existed can't be collected."""
+    await login_as(client, db_session, role=UserRole.counter)
+    item = await _create_item(client)
+    await client.post(f"/api/v1/items/{item['id']}/void", json={"reason": "拍錯照"})
+
+    picked = await client.post(
+        f"/api/v1/items/{item['id']}/pickup",
+        json={
+            "method": "signature",
+            "picked_up_by_name": "王小明",
+            "signature_png_base64": _VALID_PNG_B64,
+        },
+    )
+    assert picked.status_code == 409
+    assert picked.json()["error"]["code"] == "ITEM_STATUS_INVALID"
+
+
+async def test_picked_up_item_cannot_be_voided(client, db_session):
+    """Voiding a collected item would erase a signature recording something
+    that really happened. That isn't correcting a mistake, it's destroying
+    evidence -- so the state machine refuses."""
+    await login_as(client, db_session, role=UserRole.counter)
+    item = await _create_item(client)
+    picked = await client.post(
+        f"/api/v1/items/{item['id']}/pickup",
+        json={
+            "method": "signature",
+            "picked_up_by_name": "王小明",
+            "signature_png_base64": _VALID_PNG_B64,
+        },
+    )
+    assert picked.status_code == 200
+
+    resp = await client.post(
+        f"/api/v1/items/{item['id']}/void", json={"reason": "想反悔"}
+    )
+    assert resp.status_code == 409
+    assert resp.json()["error"]["code"] == "ITEM_ALREADY_PICKED"
+
+
+async def test_void_is_audited_with_its_reason(client, db_session):
+    await login_as(client, db_session, role=UserRole.admin)
+    item = await _create_item(client)
+    await client.post(f"/api/v1/items/{item['id']}/void", json={"reason": "按錯送出"})
+
+    logs = await client.get("/api/v1/admin/audit-logs?action=mail_item.void")
+    assert logs.status_code == 200
+    entries = logs.json()["data"]
+    assert entries, "voiding must leave a trail"
+    assert entries[0]["diff_json"]["reason"] == "按錯送出"
+    assert entries[0]["diff_json"]["after"]["status"] == "voided"
+
+
+async def test_employee_cannot_void(client, db_session):
+    await login_as(client, db_session, role=UserRole.counter)
+    item = await _create_item(client)
+    await client.post("/api/v1/auth/logout")
+
+    await login_as(client, db_session, role=UserRole.employee, email="emp2@example.com")
+    resp = await client.post(
+        f"/api/v1/items/{item['id']}/void", json={"reason": "亂搞"}
+    )
+    assert resp.status_code == 403

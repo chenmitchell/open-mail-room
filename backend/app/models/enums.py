@@ -56,6 +56,13 @@ class MailStatus(str, enum.Enum):
     forwarded = "forwarded"
     unclaimed = "unclaimed"
     destroyed = "destroyed"
+    # A registration that should never have existed: double-registered, wrong
+    # photo, cancelled before anyone came. Distinct from `returned` (a real
+    # parcel really went back to the sender) because a mis-registration is not
+    # a mailroom event and must not show up in the counts as if it were.
+    # The row stays -- deleting it would put a hole in an append-only trail --
+    # but it is excluded from reports and from every pickup path.
+    voided = "voided"
 
 
 class PickupMethod(str, enum.Enum):
