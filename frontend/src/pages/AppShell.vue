@@ -7,6 +7,7 @@ import { isFeatureEnabled } from '@/branding'
 import AppBadge from '@/components/AppBadge.vue'
 import OfflineQueueBadge from '@/components/OfflineQueueBadge.vue'
 import ChangePasswordDialog from '@/components/ChangePasswordDialog.vue'
+import AuthorCredit from '@/components/AuthorCredit.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const router = useRouter()
@@ -325,6 +326,9 @@ async function onLogout() {
     <main class="app-shell__main">
       <OfflineQueueBadge class="app-shell__offline-badge" />
       <router-view />
+      <footer class="app-shell__footer">
+        <AuthorCredit />
+      </footer>
     </main>
     <ChangePasswordDialog
       :open="changePasswordOpen"

@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n'
 import AppInput from '@/components/AppInput.vue'
 import AppButton from '@/components/AppButton.vue'
 import { useAuthStore } from '@/stores/auth'
+import AuthorCredit from '@/components/AuthorCredit.vue'
 import { ApiError } from '@/api/client'
 
 const { t } = useI18n({ useScope: 'global' })
@@ -132,6 +133,7 @@ async function onSubmit() {
         {{ $t('auth.privacyNotice') }}
       </p>
     </form>
+    <AuthorCredit />
   </main>
 </template>
 

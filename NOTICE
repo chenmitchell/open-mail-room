@@ -1,0 +1,52 @@
+Open Mail Room
+Copyright (C) 2026 Mitchell Chen <https://github.com/chenmitchell>
+
+Original author and project home: Mitchell Chen — https://github.com/chenmitchell
+Upstream repository: https://github.com/chenmitchell/open-mail-room
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License, version 3, as published by
+the Free Software Foundation. See the LICENSE file for the full terms.
+
+--------------------------------------------------------------------------------
+Additional term under AGPL-3.0 Section 7(b) — Attribution
+--------------------------------------------------------------------------------
+
+As permitted by Section 7(b) of the GNU Affero General Public License, this
+work carries the following additional term, which applies to the whole of the
+work and to every copy or modified version of it:
+
+  You must preserve, and must not remove or obscure, the attribution to the
+  original author. Specifically:
+
+  (a) This NOTICE file, and the copyright and author-attribution lines it
+      contains, must be retained in all copies and in all modified versions.
+
+  (b) Any redistribution — modified or unmodified, in source or object form —
+      must credit the original author, Mitchell Chen, and must retain a
+      working link back to the upstream repository:
+      https://github.com/chenmitchell/open-mail-room
+
+  (c) If the work, or a work derived from it, is run to interact with users
+      remotely through a computer network (as this application is), the
+      "Appropriate Legal Notices" it displays must credit the original author,
+      Mitchell Chen, with a link to https://github.com/chenmitchell . The
+      application ships with this credit in its interface; you may re-style it
+      to match your own branding, but you may not remove it.
+
+  (d) If you modify the work, you must cause the modified files to carry
+      prominent notices stating that you changed them and the date of change
+      (this is already required by AGPL-3.0 Section 5(a)); those notices must
+      not be worded so as to imply that the original author endorses your
+      modified version, and must not remove the original author's attribution.
+
+This attribution requirement is an "additional term" in the sense of AGPL-3.0
+Section 7. It does not restrict any of the freedoms the AGPL grants — you may
+still use, study, modify, redistribute, and self-host this software, including
+commercially. It only requires that credit to the original author is kept
+visible and traceable back to its source.
+
+--------------------------------------------------------------------------------
+
+If you build something with this, the author would genuinely like to hear about
+it — but that's a wish, not a term of the licence.

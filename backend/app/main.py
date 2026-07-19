@@ -1,3 +1,7 @@
+# Open Mail Room — self-hostable office mailroom system.
+# Copyright (C) 2026 Mitchell Chen — https://github.com/chenmitchell
+# SPDX-License-Identifier: AGPL-3.0-or-later WITH attribution term (see NOTICE)
+# Upstream: https://github.com/chenmitchell/open-mail-room
 from __future__ import annotations
 
 import asyncio

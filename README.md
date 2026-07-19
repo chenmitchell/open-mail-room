@@ -4,7 +4,10 @@
 
 專為台灣辦公室設計:中文姓名模糊比對、部門件轉交、中華郵政與各家宅配單號格式、超商取貨、代收貨款(COD)、冷藏件。
 
+**原作者 / Original author:** [Mitchell Chen](https://github.com/chenmitchell) · 更多作品見 [github.com/chenmitchell](https://github.com/chenmitchell)
+
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
+[![Author: Mitchell Chen](https://img.shields.io/badge/Author-Mitchell%20Chen-181717?logo=github)](https://github.com/chenmitchell)
 
 ---
 
@@ -218,14 +221,30 @@ npm test
 
 ---
 
-## 授權
+## 授權與署名
 
-[GNU AGPL v3](LICENSE)。
+[GNU AGPL v3](LICENSE),**外加一條 AGPL 第 7(b) 署名條款**(見 [NOTICE](NOTICE))。
 
-白話:你可以自架、自用、改它,公司內部用完全不受限制。但如果你把改過的版本**架成對外服務給別人用**,你必須把你的修改也開源出來。
+白話:
+
+- 你可以自架、自用、改它、商業使用,公司內部用完全不受限制。
+- 如果你把改過的版本**架成對外服務給別人用**,你必須把你的修改也開源出來(這是 AGPL)。
+- **不論你怎麼用或怎麼改,都必須保留對原作者 Mitchell Chen 的署名,以及回到 [github.com/chenmitchell/open-mail-room](https://github.com/chenmitchell/open-mail-room) 的連結** —— 包含 app 介面裡的那行作者標示。你可以改樣式配合你的品牌,但不能拿掉(這是第 7(b) 條)。
+
+修改後的版本必須標明「你改過、以及改的日期」,且不得暗示原作者為你的修改版本背書。
+
+---
+
+## 原作者
+
+**Mitchell Chen** — [github.com/chenmitchell](https://github.com/chenmitchell)
+
+這個專案的完整開發歷程、以及其他作品,都在上面的 GitHub。歡迎回去看看。
 
 ---
 
 ## 貢獻
 
 歡迎 Issue 與 PR。送 PR 前請確認 `pytest`、`vitest`、`ruff`、`eslint`、`vue-tsc` 都是綠的。
+
+貢獻即表示你同意你的貢獻以本專案的授權(AGPL-3.0 + 第 7(b) 署名條款)釋出。
