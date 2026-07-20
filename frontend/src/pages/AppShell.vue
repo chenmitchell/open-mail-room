@@ -499,6 +499,14 @@ async function onLogout() {
   background-color: var(--color-bg);
 }
 
+.app-shell__footer {
+  /* Sits after the routed view inside the scrolling main column, so it
+     follows the content rather than pinning to the viewport. */
+  margin-top: var(--space-6);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
 .app-shell__offline-badge {
   margin-bottom: var(--space-4);
 }

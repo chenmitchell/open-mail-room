@@ -133,7 +133,7 @@ async function onSubmit() {
         {{ $t('auth.privacyNotice') }}
       </p>
     </form>
-    <AuthorCredit />
+    <AuthorCredit class="login-page__credit" />
   </main>
 </template>
 
@@ -141,10 +141,19 @@ async function onSubmit() {
 .login-page {
   min-height: 100vh;
   display: flex;
+  /* Column, not the default row: the author credit sits *under* the card.
+     Without this it becomes a flex sibling of the card and lands beside it. */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: var(--space-4);
   padding: var(--space-5);
   background-color: var(--color-bg);
+}
+
+.login-page__credit {
+  width: 100%;
+  max-width: 400px;
 }
 
 .login-page__card {
